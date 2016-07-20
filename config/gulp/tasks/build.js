@@ -19,7 +19,7 @@ gulp.task('build', function (done) {
 
 /* Concat and minify/uglify all css, js, and copy fonts */
 gulp.task('build-assets', function (done) {
-    runSequence('clean-build', ['sass', 'fonts'], function () {
+    runSequence('clean-build', ['sass', 'fonts', 'primeng-theme'], function () {
         gulp.src(config.app + '**/*.html', {
             base: config.app
         })
@@ -50,16 +50,24 @@ gulp.task('build-assets', function (done) {
     });
 });
 
+/* Copy primng theme */
+gulp.task('primeng-theme', function () {    
+	gulp.src(['node_modules/primeui/themes/omega/fonts/**/*.*' ])
+	  .pipe(gulp.dest(config.build.assetPath + 'fonts'));    
+	
+	gulp.src(['node_modules/primeui/themes/omega/images/**/*.*'])
+	  .pipe(gulp.dest(config.build.assetPath + 'images'));    
+
+});
+
 /* Copy fonts in packages */
 gulp.task('fonts', function () {
     gulp.src(config.assetsPath.fonts + '**/*.*', {
         base: config.assetsPath.fonts
     })
-    .pipe(gulp.dest(config.build.fonts));
+    .pipe(gulp.dest(config.build.fonts));  
 
-    gulp.src([
-        'node_modules/font-awesome/fonts/*.*'
-    ])
+    gulp.src([ 'node_modules/font-awesome/fonts/*.*'  ])
     .pipe(gulp.dest(config.build.fonts));
 });
 

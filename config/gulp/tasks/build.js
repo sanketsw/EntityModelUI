@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var zip = require('gulp-zip');
 var pkg = require('../../../package.json');
+var gzip = require('gulp-gzip');
 
 require('@ngstarter/systemjs-extension')(config);
 
@@ -59,6 +60,15 @@ gulp.task('primeng-theme', function () {
 	  .pipe(gulp.dest(config.build.assetPath + 'images'));    
 
 });
+
+/* This task is not needed anymore because we are using conenct.compress */
+gulp.task('gzip', function(done) {
+    gulp.src(config.build.path + '**/*.{js,css,html,woff,woff2,png,ico}*')
+        .pipe(gzip())
+        .pipe(gulp.dest('serve/'))
+        .on('finish', done);
+});
+
 
 /* Copy fonts in packages */
 gulp.task('fonts', function () {

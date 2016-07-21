@@ -1,4 +1,4 @@
-# Primeng Sonarqube Angular 2 Starter
+# cheetah
 Angular2 starter with Continuous Integration, Jenkins DevOps, Automated Test Coverage using Sonarqube and  [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library
 
 
@@ -20,8 +20,8 @@ Angular2 starter with Continuous Integration, Jenkins DevOps, Automated Test Cov
 * [Start](#start)
 * [Testing](#testing)
 * [Production](#production)
-* [DevOps] (#DevOps) 
-* [Running-on-IBM-Bluemix](#Running-on-IBM-Bluemix)
+* [DevOps] (#devops) 
+* [Running-on-IBM-Bluemix](#running-on-ibm-bluemix)
 * [Extension](#extension)
 * [Contributing](#contributing)
 * [Special thanks](#special-thanks)
@@ -132,8 +132,8 @@ http://stackoverflow.com/questions/37164545/how-to-upload-karma-test-report-to-s
 **SonarQube Integration**   
 sonar-project.properties in the code repo:   
 ```
-sonar.projectKey=primeng-angular
-sonar.projectName=primeng-angular
+sonar.projectKey=cheetah
+sonar.projectName=cheetah
 sonar.projectVersion=1.0
 sonar.souceEncoding=UTF-8
 
@@ -155,15 +155,15 @@ Published artifacts: `**/dist/*.zip`
 
 
 ## Running-on-IBM-Bluemix
-On gulp build, artifact produced is `primeng-angular2-starter-1.0.0-rc.4.zip` in the dist folder. This zip file contains source code and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
+On gulp build, artifact produced is `cheetah-1.0.0-rc.4.zip` in the dist folder. This zip file contains source code and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
 
 To push to bluemix execute:   
-`cf push primeng.angular -p dist/primeng-angular2-starter-1.0.0-rc.4.zip `
+`cf push cheetah -p dist/cheetah-1.0.0-rc.4.zip `
 
 Bluemix will use nodejs_buildpack and execute `npm install` followed `npm start`
 `npm start` executes server.js and launches the html and css contetns from `build` folder
 
-Hosted: http://primengangular.mybluemix.net/
+Hosted: http://cheetah.mybluemix.net/
 
 ## Extension
 You can extend this starter with many extensions built by the community. Browse the extensions [here](https://github.com/ngstarter)

@@ -1,0 +1,12 @@
+<div class="login">
+	<div class="row"><img width="140" height="100" src="assets/images/ng2.jpg" alt="Ng2"></div>
+	<div class="row marginTop10">
+		<input id="in" type="text" size="30" pInputText [(ngModel)]="name"  placeholder="User Name"/>
+	</div>
+	<div class="row marginTop10">
+		<input type="text" size="30" pPassword [(ngModel)]="password" placeholder="Password"/>
+	</div>
+	<div class="row marginTop10">
+		<button id="Login" pButton type="button" (click)="login()" icon="fa-sign-in"  label="Log in"></button>
+	</div>
+</div>

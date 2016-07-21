@@ -1,12 +1,12 @@
 {
-  "name": "primeng-angular2-starter",
+  "name": "cheetah",
   "version": "1.0.0-rc.4",
   "author": "Sanket Sangwikar",
-  "description": "Primeng Angular 2 Starter with extensible features",
+  "description": "Speed of Cheetah for Customer Relations",
   "main": "src/tmp/app/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sanketsw/primeng-aungular-starter.git"
+    "url": "https://github.com/sanketsw/cheetah.git"
   },
   "engines": {
     "node": ">=4.3"
@@ -36,7 +36,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sanketsw/primeng-aungular-starter/issues"
+    "url": "https://github.com/sanketsw/cheetah/issues"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",

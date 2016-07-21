@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     config = require('./config/gulp/config')(),
     envConfig = require('./config/gulp/env');
 
-console.log('======== Primeng Angular 2 Starter ========');
+console.log('======== cheetah ========');
 console.log('Current environment: ' + envConfig.ENV);
 console.log('- Change environment via --env or NODE_ENV');
 console.log('===========================================');

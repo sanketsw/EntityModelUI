@@ -1,0 +1,26 @@
+<div class="marginTop10">
+	<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
+	<span class="col-xs-6 Center Bold">Customer Details</span>
+	<br/>
+	<hr class="Center" />
+</div>
+
+
+<div>
+	<span class="row" style="font-size: 250%;font-weight: bold;">{{customer.name}}</span>
+	<div class="row">
+		<span class="col-xs-8" style="font-size: 110%;margin-top: 5px;"> Current revenue: </span>
+		<span class="col-xs-4" style="font-size: 150%;     text-align: right;"> {{customer.revenue}}</span>
+	</div>
+	<span [class.red]="customer.expiry < 60" class="row" style="font-size: 110%;">Expires in <span class="Bold"> {{customer.expiry}} </span> days</span>
+	<div class="row">
+		<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
+		<span [class.differenceGreen]="customer.difference > -1" [class.differenceRed]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{customer.difference}}</span>
+	</div>
+	<br/>
+	<hr class="Center" />
+</div>
+
+<div class="row padding10">
+	<button class="FRight" id="Plan" style="width: 50%; max-width: 200px" pButton type="button" (click)="login()" icon="fa-pencil" label="Workout a plan"></button>
+</div>

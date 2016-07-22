@@ -1,12 +1,15 @@
-<div class="container">
-	<h3>Know your customers</h3>
-
-	<p-panel *ngFor="let customer of customers" header="{{customer.name}}">
-
-					<h4>$45654</h4>
-					<span class="row duedate">Expires in 10 days</span>
-	</p-panel>
-
-
-
+<div class="marginTop10">
+	<span class="col-xs-3 FLeft"><!--a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a--></span>
+	<span class="col-xs-6 Center Bold">Know your customers</span>
+	<br/>
+	<hr class="Center" />
+</div>
+<div class="">
+	<div *ngFor="let customer of customers"  (click)="viewCustomer(customer)">
+		<span class="customerName">{{customer.name}}</span>
+		<span class="revenue">{{customer.revenue}}</span>
+		<span [class.red]="customer.expiry < 60" class="row">Expires in {{customer.expiry}} days</span>
+		<br/>
+		<hr class="Center" />
+	</div>
 </div>

@@ -3,4 +3,5 @@ export class Customer {
     name: string;
     revenue: number;
     expiry: number;
+    difference: number;
 }

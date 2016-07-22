@@ -1,13 +1,23 @@
-h4 {
-	color: gray;
-	float: right;
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-
-
 .marginTop10 {
 	margin-top: 10px;
 }
+.Bold {
+  font-weight: bold;
+}
 
-.duedate {
-	    color: red;
+.red {
+  color: red;
+}
+.revenue {
+  color: gray;
+  float: right;
+	font-size: 200%;
+	margin-top: 2%;
+}
+.customerName {
+	font-size: 150%;
 }

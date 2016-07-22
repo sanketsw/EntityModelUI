@@ -1,12 +1,17 @@
 <div class="container">
-	<h3>Product Plans</h3>
+	<h3>Products</h3>
 
-	<p-panel *ngFor="let customer of customers" header="{{customer.name}}">
+	<p-panel *ngFor="let product of products" header="{{product.name}}">
 
-					<h4>$45654</h4>
-					<span class="row duedate">Expires in 10 days</span>
+					<h4>Price</h4>
+					<span class="row duedate">Description</span>
 	</p-panel>
 
+	
+	<h3>Plans</h3>
+	<p-panel *ngFor="let plan of plans" header="{{plan.name}}">
 
+					<span class="row duedate">Description</span>
+	</p-panel>
 
 </div>

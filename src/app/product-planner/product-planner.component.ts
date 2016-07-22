@@ -2,8 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Button, InputText, Password, Panel, DataList} from 'primeng/primeng';
 import {Router} from '@angular/router';
 
-import { CustomerService } from '../services/customer.service';
-import { Customer } from '../model/customer';
+import { ProductService } from '../services/product.service';
+import { PlanService } from '../services/plan.service';
+import { Product } from '../model/product';
+import { Plan } from '../model/plan';
 
 
 @Component({
@@ -13,27 +15,35 @@ import { Customer } from '../model/customer';
     'app/product-planner/product-planner.css'
   ],
   directives: [Button, InputText, Password, Panel, DataList],
-  providers: [CustomerService]
+  providers: [ProductService, PlanService]
 })
 
 export class ProductPlannerComponent implements OnInit {
 
-  customers: Customer[];
+  products: Product[];
 
-  selectedCustomer: Customer;
+  plans: Plan[];
 
-  constructor(private router: Router, private customerService: CustomerService) {
+  selectedProduct: Product;
+
+  selectedPlan: Plan;
+
+  constructor(private router: Router, private productService: ProductService, private planService: PlanService) {
     // sessionStorage.setItem('loggedIn', 'false');
   }
 
 
   ngOnInit() {
-    this.customerService.getCustomers().then(customers => this.customers = customers);
+    this.productService.getProducts().then(products => this.products = products);
+    this.planService.getPlans().then(plans => this.plans = plans);
   }
 
-  selectCustomer(customer: Customer) {
-    this.selectedCustomer = customer;
+  selectProduct(product: Product) {
+    this.selectedProduct = product;
   }
 
+  selectPlan(plan: Plan) {
+    this.selectedPlan = plan;
+  }
 
 }

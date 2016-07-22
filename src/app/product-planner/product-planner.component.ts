@@ -29,17 +29,31 @@ export class ProductPlannerComponent implements OnInit {
   selectedProduct: Product;
 
   selectedCategory: Category;
+  
+  totalPrice: number = 0;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
+	this.totalPrice = 0;
   }
 
-
+  recalculate() {
+    this.calculate(this.products);
+  }
+  
+  calculate(products) {
+    this.totalPrice = 0
+    for(let currntProduct of products) {
+      this.totalPrice += (currntProduct.price * currntProduct.count);
+    }
+  }
+  
   ngOnInit() {
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
+	this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));
   }
-
+  
   selectProduct(product: Product) {
     this.selectedProduct = product;
   }
@@ -50,10 +64,18 @@ export class ProductPlannerComponent implements OnInit {
 
   select(product: Product) {
     product.count ++;
+    this.recalculate();
+  }
+  
+  totalPrice() {
+    return this.totalPrice;
   }
 
   deSelect(product: Product) {
-    product.count --;
+    if(product.count > 0) {
+      product.count --;
+    }
+    this.recalculate();
   }
 
 }

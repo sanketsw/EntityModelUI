@@ -6,8 +6,8 @@ import {AccordionTab} from 'primeng/primeng';
 
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
-import { Category } from '../model/product';
-import { Plan } from '../model/plan';
+import { Category } from '../model/category';
+import { Product } from '../model/product';
 
 
 @Component({
@@ -29,9 +29,9 @@ export class ProductPlannerComponent implements OnInit {
   selectedProduct: Product;
 
   selectedCategory: Category;
-  
+
   plannedPrice: number;
-  
+
   initialPrice: number;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
@@ -41,28 +41,28 @@ export class ProductPlannerComponent implements OnInit {
   recalculate() {
     this.calculate(this.products);
   }
-  
+
   calculate(products) {
     this.plannedPrice = 0;
-    for(let currentProduct of products) {
+    for (let currentProduct of products) {
       this.plannedPrice += (currentProduct.price * currentProduct.count);
     }
   }
-  
+
   calculateInitialPrice(products) {
     this.initialPrice = 0;
-    for(let currentProduct of products) {
+    for (let currentProduct of products) {
       this.initialPrice += (currentProduct.price * currentProduct.count);
     }
   }
-  
+
   ngOnInit() {
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
-	this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));
+    this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));
     this.productService.getProductsInCurrentPlan().then(products => this.calculateInitialPrice(products));
   }
-  
+
   selectProduct(product: Product) {
     this.selectedProduct = product;
   }
@@ -72,21 +72,21 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   select(product: Product) {
-    product.count ++;
+    product.count++;
     this.recalculate();
   }
-  
-  plannedPrice() {
+
+  plannedPrice1() {
     return this.initialPrice;
   }
 
-  initialPrice() {
+  initialPrice1() {
     return this.initialPrice;
   }
-  
+
   deSelect(product: Product) {
-    if(product.count > 0) {
-      product.count --;
+    if (product.count > 0) {
+      product.count--;
     }
     this.recalculate();
   }

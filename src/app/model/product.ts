@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  status?: string;
-  categoryId?: string;
-  count?: number;
+  status: string;
+  categoryId: string;
+  count: number;
 }

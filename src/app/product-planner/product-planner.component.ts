@@ -24,9 +24,7 @@ export class ProductPlannerComponent implements OnInit {
   categories: Category[];
   selectedProduct: Product;
   selectedCategory: Category;
-
   plannedPrice: number;
-
   initialPrice: number;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
@@ -67,24 +65,13 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   select(product: Product) {
-    product.count++;
+    product.count ++;
     this.recalculate();
   }
 
-  plannedPrice1() {
-    return this.initialPrice;
-  }
-
-  initialPrice1() {
-    return this.initialPrice;
-  }
-
-
   deSelect(product: Product) {
     if (product.count > 0) {
-
-      product.count--;
-
+      product.count --;
     }
     this.recalculate();
   }

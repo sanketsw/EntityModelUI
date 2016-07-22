@@ -11,3 +11,8 @@ h4 {
 .duedate {
 	    color: red;
 }
+
+.selected {
+	background-color:#eeffee;
+	
+}

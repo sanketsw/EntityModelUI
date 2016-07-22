@@ -7,9 +7,10 @@
 		<div *ngFor="let product of products">
 			<div *ngIf="product.planName == plan.name">
 				<p-panel header="{{product.name}}">
-			
-					<h4>{{product.name}}</h4>
-					<span class="row duedate">Description</span>
+					<div [class.selected]="product.selected == 'true'">
+						<h4>{{product.name}}</h4>
+						<span class="row duedate">Description</span>
+					</div>
 				</p-panel>
 			</div>
 		</div>

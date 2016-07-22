@@ -30,11 +30,12 @@ export class ProductPlannerComponent implements OnInit {
 
   selectedCategory: Category;
   
-  totalPrice: number = 0;
+  plannedPrice: number;
+  
+  initialPrice: number;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
-	this.totalPrice = 0;
   }
 
   recalculate() {
@@ -42,9 +43,16 @@ export class ProductPlannerComponent implements OnInit {
   }
   
   calculate(products) {
-    this.totalPrice = 0
-    for(let currntProduct of products) {
-      this.totalPrice += (currntProduct.price * currntProduct.count);
+    this.plannedPrice = 0;
+    for(let currentProduct of products) {
+      this.plannedPrice += (currentProduct.price * currentProduct.count);
+    }
+  }
+  
+  calculateInitialPrice(products) {
+    this.initialPrice = 0;
+    for(let currentProduct of products) {
+      this.initialPrice += (currentProduct.price * currentProduct.count);
     }
   }
   
@@ -52,6 +60,7 @@ export class ProductPlannerComponent implements OnInit {
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
 	this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));
+    this.productService.getProductsInCurrentPlan().then(products => this.calculateInitialPrice(products));
   }
   
   selectProduct(product: Product) {
@@ -67,10 +76,14 @@ export class ProductPlannerComponent implements OnInit {
     this.recalculate();
   }
   
-  totalPrice() {
-    return this.totalPrice;
+  plannedPrice() {
+    return this.initialPrice;
   }
 
+  initialPrice() {
+    return this.initialPrice;
+  }
+  
   deSelect(product: Product) {
     if(product.count > 0) {
       product.count --;

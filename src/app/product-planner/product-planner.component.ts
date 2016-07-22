@@ -7,10 +7,6 @@ import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
 
 @Component({
   selector: 'as-product-planner',
@@ -28,15 +24,9 @@ export class ProductPlannerComponent implements OnInit {
   categories: Category[];
   selectedProduct: Product;
   selectedCategory: Category;
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
   plannedPrice: number;
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
   initialPrice: number;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
@@ -80,28 +70,21 @@ export class ProductPlannerComponent implements OnInit {
     product.count++;
     this.recalculate();
   }
-<<<<<<< HEAD
 
   plannedPrice1() {
     return this.initialPrice;
   }
-=======
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
 
-<<<<<<< HEAD
   initialPrice1() {
     return this.initialPrice;
   }
 
-=======
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
+
   deSelect(product: Product) {
     if (product.count > 0) {
-<<<<<<< HEAD
+
       product.count--;
-=======
-      product.count --;
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
+
     }
     this.recalculate();
   }

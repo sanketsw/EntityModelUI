@@ -11,3 +11,26 @@ h4 {
 .duedate {
 	    color: red;
 }
+
+.selected {
+	background-color:#eeffee;
+	
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.dynamicColumn{
+    width:auto;
+    overflow:hidden;
+	height:30px;
+	vertical-align;top;
+}
+
+.staticColumn40 {
+    width:100px;
+    float:right;
+	height:30px;
+	vertical-align;top;
+}

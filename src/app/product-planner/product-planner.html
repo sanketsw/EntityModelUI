@@ -1,17 +1,23 @@
 <div class="container">
-	<h3>Products</h3>
-
-	<p-panel *ngFor="let product of products" header="{{product.name}}">
-
-					<h4>Price</h4>
-					<span class="row duedate">Description</span>
-	</p-panel>
-
+	<h1>Customers Plan</h1>
 	
-	<h3>Plans</h3>
-	<p-panel *ngFor="let plan of plans" header="{{plan.name}}">
-
-					<span class="row duedate">Description</span>
-	</p-panel>
-
+	<p-accordion>
+		<p-accordionTab *ngFor="let category of categories" header="{{category.name}}">
+			<div *ngFor="let product of products">
+				<div *ngIf="product.categoryId == category.id" class="row" style="margin-top:10px;">
+					<div class="col-xs-8" [class.bold]="product.count > 0">{{product.name}} <br/> <span style="font-size: 90%;"> </span></div>
+					<div style="text-align: right;">
+						<button id="AddProduct" style="max-width: 25px" pButton type="button" (click)="deSelect(product)" label="-"></button>
+						{{product.count}}
+						<button id="RemoveProduct" style="max-width: 25px" pButton type="button" (click)="select(product)" label="+"></button>
+					</div>
+				</div>
+			</div>
+		</p-accordionTab>
+	</p-accordion>
+	<div class="row" style="margin-top:10px;">
+		<div style="text-align: right;">Initial earnings: {{initialPrice}}</div>
+		<div style="text-align: right;">Planned earnings: {{plannedPrice}}</div>
+		<div style="text-align: right;">Difference: {{plannedPrice - initialPrice}}</div>
+	</div>
 </div>

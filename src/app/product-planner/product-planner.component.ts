@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Button, InputText, Password, Panel, DataList} from 'primeng/primeng';
 import {Router} from '@angular/router';
+import {Accordion} from 'primeng/primeng';
+import {AccordionTab} from 'primeng/primeng';
 
 import { ProductService } from '../services/product.service';
-import { PlanService } from '../services/plan.service';
-import { Product } from '../model/product';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../model/product';
 import { Plan } from '../model/plan';
 
 
@@ -14,44 +16,44 @@ import { Plan } from '../model/plan';
   styleUrls: [
     'app/product-planner/product-planner.css'
   ],
-  directives: [Button, InputText, Password, Panel, DataList],
-  providers: [ProductService, PlanService]
+  directives: [Button, InputText, Password, Panel, DataList, Accordion, AccordionTab],
+  providers: [ProductService, CategoryService]
 })
 
 export class ProductPlannerComponent implements OnInit {
 
   products: Product[];
 
-  plans: Plan[];
+  categories: Category[];
 
   selectedProduct: Product;
 
-  selectedPlan: Plan;
+  selectedCategory: Category;
 
-  constructor(private router: Router, private productService: ProductService, private planService: PlanService) {
+  constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
   }
 
 
   ngOnInit() {
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
-    this.planService.getPlans().then(plans => this.plans = plans);
+    this.categoryService.getCategories().then(categories => this.categories = categories);
   }
 
   selectProduct(product: Product) {
     this.selectedProduct = product;
   }
 
-  selectPlan(plan: Plan) {
-    this.selectedPlan = plan;
+  selectCategory(category: Category) {
+    this.selectedCategory = category;
   }
 
   select(product: Product) {
-    product.selected = 'true';
+    product.count ++;
   }
 
   deSelect(product: Product) {
-    product.selected = 'false';
+    product.count --;
   }
 
 }

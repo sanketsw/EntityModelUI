@@ -3,6 +3,6 @@ export class Product {
   name: string;
   description: string;
   price: number;
-  planName: string;
-  selected: string;
+  categoryId: string;
+  count: number;
 }

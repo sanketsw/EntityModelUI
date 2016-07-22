@@ -1,17 +1,18 @@
 <div class="container">
-	<h3>Products</h3>
-
-	<p-panel *ngFor="let product of products" header="{{product.name}}">
-
-					<h4>Price</h4>
-					<span class="row duedate">Description</span>
-	</p-panel>
-
-	
 	<h3>Plans</h3>
-	<p-panel *ngFor="let plan of plans" header="{{plan.name}}">
 
+	<p-panel *ngFor="let plan of plans" header="{{plan.name}}">
+		<h4>Plan</h4>
+		<span class="row duedate">Description</span>
+		<div *ngFor="let product of products">
+			<div *ngIf="product.planName == plan.name">
+				<p-panel header="{{product.name}}">
+			
+					<h4>{{product.name}}</h4>
 					<span class="row duedate">Description</span>
+				</p-panel>
+			</div>
+		</div>
 	</p-panel>
 
 </div>

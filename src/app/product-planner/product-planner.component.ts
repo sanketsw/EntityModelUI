@@ -34,7 +34,7 @@ export class ProductPlannerComponent implements OnInit {
 
 
   ngOnInit() {
-    this.productService.getProducts().then(products => this.products = products);
+    this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.planService.getPlans().then(plans => this.plans = plans);
   }
 

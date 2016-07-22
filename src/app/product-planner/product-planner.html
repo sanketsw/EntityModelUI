@@ -1,19 +1,23 @@
 <div class="container">
-	<h3>Plans</h3>
-
-	<p-panel *ngFor="let plan of plans" header="{{plan.name}}">
-		<h4>Plan</h4>
-		<span class="row duedate">Description</span>
+	<h1>Customers Plans</h1>
+	
+	<div *ngFor="let plan of plans">
+		<div class="row">
+			<div class="col-xs-8"><h2>{{plan.name}}</h2><br/> <span style="font-size: 90%;">A plan for the customer</span></div>
+			<div class="col-xs-4" style="text-align: right;">Total price</div>
+		</div>
 		<div *ngFor="let product of products">
-			<div *ngIf="product.planName == plan.name">
-				<p-panel header="{{product.name}}">
-					<div [class.selected]="product.selected == 'true'">
-						<h4>{{product.name}}</h4>
-						<span class="row duedate">Description</span>
-					</div>
-				</p-panel>
+			<div class="container2" *ngIf="product.planName == plan.name">
+				<span class="col-xs-8" class="dynamicColumn" [class.bold]="product.selected == 'true'">{{product.name}}</span>
+				
+				<span class="col-xs-8" class="staticColumn40" *ngIf="product.selected == 'true'">
+					<button id="AddProduct" style="width: 60%; max-width: 40px" pButton type="button" (click)="deSelect(product)" label="-"></button>
+				</span>
+				
+				<span class="col-xs-8" class="staticColumn40" *ngIf="product.selected == 'false'">
+					<button id="RemoveProduct" style="width: 60%; max-width: 40px" pButton type="button" (click)="select(product)" label="+"></button>
+				</span>
 			</div>
 		</div>
-	</p-panel>
-
+	</div>
 </div>

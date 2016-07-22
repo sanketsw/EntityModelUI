@@ -46,4 +46,12 @@ export class ProductPlannerComponent implements OnInit {
     this.selectedPlan = plan;
   }
 
+  select(product: Product) {
+    product.selected = 'true';
+  }
+
+  deSelect(product: Product) {
+    product.selected = 'false';
+  }
+
 }

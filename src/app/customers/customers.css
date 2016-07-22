@@ -8,6 +8,10 @@ hr {
 .Bold {
   font-weight: bold;
 }
+.Center {
+  text-align: center;
+ display: block;
+}
 
 .red {
   color: red;

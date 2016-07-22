@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Button, InputText, Password, Panel, DataList} from 'primeng/primeng';
-import {Router} from '@angular/router';
-import {Accordion} from 'primeng/primeng';
-import {AccordionTab} from 'primeng/primeng';
-
+import { Component, OnInit } from '@angular/core';
+import { InputText, Password, Panel, DataList } from 'primeng/primeng';
+import { Router } from '@angular/router';
+import { Accordion } from 'primeng/primeng';
+import { AccordionTab } from 'primeng/primeng';
 import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
 
 @Component({
   selector: 'as-product-planner',
@@ -16,22 +18,25 @@ import { Product } from '../model/product';
   styleUrls: [
     'app/product-planner/product-planner.css'
   ],
-  directives: [Button, InputText, Password, Panel, DataList, Accordion, AccordionTab],
+  directives: [InputText, Password, Panel, DataList, Accordion, AccordionTab],
   providers: [ProductService, CategoryService]
 })
 
 export class ProductPlannerComponent implements OnInit {
 
   products: Product[];
-
   categories: Category[];
-
   selectedProduct: Product;
-
   selectedCategory: Category;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
   plannedPrice: number;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
   initialPrice: number;
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
@@ -75,18 +80,28 @@ export class ProductPlannerComponent implements OnInit {
     product.count++;
     this.recalculate();
   }
+<<<<<<< HEAD
 
   plannedPrice1() {
     return this.initialPrice;
   }
+=======
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
 
+<<<<<<< HEAD
   initialPrice1() {
     return this.initialPrice;
   }
 
+=======
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
   deSelect(product: Product) {
     if (product.count > 0) {
+<<<<<<< HEAD
       product.count--;
+=======
+      product.count --;
+>>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
     }
     this.recalculate();
   }

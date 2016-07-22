@@ -7,9 +7,11 @@
 				<div *ngIf="product.categoryId == category.id" class="row" style="margin-top:10px;">
 					<div class="col-xs-8" [class.bold]="product.count > 0">{{product.name}} <br/> <span style="font-size: 90%;"> </span></div>
 					<div style="text-align: right;">
-						<button id="AddProduct" style="max-width: 25px" pButton type="button" (click)="deSelect(product)" label="-"></button>
+						<p-commandLink (click)="deSelect(product)"><md-icon class="md-24">-</md-icon></p-commandLink>
+						
 						{{product.count}}
-						<button id="RemoveProduct" style="max-width: 25px" pButton type="button" (click)="select(product)" label="+"></button>
+						
+						<p-commandLink (click)="select(product)"><md-icon class="md-24">+</md-icon></p-commandLink>
 					</div>
 				</div>
 			</div>

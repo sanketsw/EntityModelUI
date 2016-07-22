@@ -18,12 +18,31 @@
 		<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
 		<span [class.differenceGreen]="customer.difference > -1" [class.differenceRed]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{customer.difference}}</span>
 	</div>
-	<br/>
 	<hr class="Center" />
 </div>
 
+<div class="marginTop10" *ngIf="customer.status == null && customer.expiry < 60">
+	<div class="Red">
+		No plan has been proposed to this customer yet.
+	</div>
+</div>
+
+<div class="marginTop10" *ngIf="customer.status">
+	<div class="Bold">
+		Proposed plan details
+	</div>
+	<div class="row">
+		<div class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for proposed plan:</div>
+		<div [class.Green]="customer.newPlanDifference > -1" [class.Red]="customer.newPlanDifference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;">
+			{{ (customer.newPlanDifference
+			<0? '': '+') + customer.newPlanDifference }} </div>
+		</div>
+		<hr class="Center" />
+	</div>
+
 <div class="row padding10">
-	<button class="FRight" id="Plan" style="width: 50%; max-width: 200px" pButton type="button" (click)="login()" icon="fa-pencil" label="Workout a plan"></button>
+	<button class="FRight" id="Plan" *ngIf="customer.status == null" style="width: 50%; max-width: 200px" pButton type="button" (click)="newPlan()" icon="fa-pencil" label="Workout a plan"></button>
+	<button class="FRight" id="Plan" *ngIf="customer.status" style="width: 50%; max-width: 200px" pButton type="button" (click)="newPlan()" icon="fa-pencil" label="Edit proposed plan"></button>
 </div>
 
 <div class="row marginTop10">

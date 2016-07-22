@@ -5,11 +5,8 @@ hr {
 .Bold {
   font-weight: bold;
 }
-.Red {
+.red {
   color: red;
-}
-.Green {
-  color: green;
 }
 .revenue {
   color: gray;
@@ -20,10 +17,10 @@ hr {
 .customerName {
   font-size: 200%;
 }
-.differenceRed {
+.Red {
   color: red;
 }
-.differenceGreen {
+.Green {
   color: green;
 }
 .renewal {

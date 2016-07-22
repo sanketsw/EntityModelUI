@@ -2,6 +2,7 @@ import { provideRouter, RouterConfig } from '@angular/router';
 
 import {HomeRoutes} from './home/index';
 import {LoginRoutes} from './login/index';
+import {PlanDetailRoutes} from './planDetail/index';
 import {CustomersRoutes} from './customers/index';
 import {CustomerDetailRoutes} from './customerDetail/index';
 import {ProductPlannerRoutes} from './product-planner/index';
@@ -10,6 +11,7 @@ import {SimplebindRoutes} from './simplebind/index';
 
 const routes: RouterConfig = [
   ...LoginRoutes,
+  ...PlanDetailRoutes,
   ...CustomersRoutes,
   ...CustomerDetailRoutes,
   ...ProductPlannerRoutes,

@@ -31,8 +31,10 @@ export class CustomersComponent implements OnInit {
     this.customerService.getCustomers().then(customers => this.customers = customers);
   }
 
-  selectCustomer(customer: Customer) {
-    this.selectedCustomer = customer;
+  viewCustomer(customer: Customer) {
+      this.selectedCustomer = customer;
+      sessionStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
+      this.router.navigate(['/customerDetail']);
   }
 
 

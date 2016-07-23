@@ -5,13 +5,19 @@
 		<p-accordionTab *ngFor="let category of categories" header="{{category.name}}">
 			<div *ngFor="let product of products">
 				<div *ngIf="product.categoryId == category.id" class="row" style="margin-top:10px;">
-					<div class="col-xs-8" [class.bold]="product.count > 0">{{product.name}} <br/> <span style="font-size: 90%;"> </span></div>
-					<div style="text-align: right;">
-						<p-commandLink (click)="deSelect(product)"><span class="miniButtonRed">-</span></p-commandLink>
-						
-						{{product.count}}
-						
-						<p-commandLink (click)="select(product)"><span class="miniButtonGreen">+</span></p-commandLink>
+					<div class="col-xs-7" [class.bold]="product.count > 0">{{product.name}} <br/> <span style="font-size: 90%;"> </span></div>
+					<div class="input-group" style="margin-right:10px">
+						<span class="input-group-btn">
+							<button type="button" (click)="deSelect(product)" class="btn btn-danger btn-number" data-type="minus">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						</span>
+						<input type="text" class="form-control input-number" [(ngModel)]="product.count" value="{{product.count}}">
+						<span class="input-group-btn">
+							<button type="button" (click)="select(product)" class="btn btn-success btn-number" data-type="plus">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</span>
 					</div>
 				</div>
 			</div>

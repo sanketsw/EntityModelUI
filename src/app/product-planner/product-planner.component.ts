@@ -12,7 +12,8 @@ import { Product } from '../model/product';
   selector: 'as-product-planner',
   templateUrl: 'app/product-planner/product-planner.html',
   styleUrls: [
-    'app/product-planner/product-planner.css'
+    'app/product-planner/product-planner.css',
+    'assets/styles/main.css'
   ],
   directives: [InputText, Password, Panel, DataList, Accordion, AccordionTab],
   providers: [ProductService, CategoryService]

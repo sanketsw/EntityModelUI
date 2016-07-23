@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Button, InputText, Password} from 'primeng/primeng';
+import {Button, InputText, Password, Messages, Message} from 'primeng/primeng';
 import {Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 
@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
   styleUrls: [
     'app/login/login.css'
   ],
-  directives: [Button, InputText, Password],
+  directives: [Button, InputText, Password, Messages],
   providers: [UserService]
 })
 
@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   name: string;
   password: string;
 
+  msgs: Message[] = [];
+
   constructor(private router: Router, private userService: UserService) {
   }
 
@@ -26,6 +28,11 @@ export class LoginComponent implements OnInit {
     if (sessionStorage.getItem('loggedIn') === 'true') {
       this.router.navigate(['/customers']);
     }
+  }
+
+  showError(summary: string, detail: string) {
+    this.msgs = [];
+    this.msgs.push({ severity: 'error', summary: summary, detail: detail });
   }
 
   login() {
@@ -38,6 +45,7 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log(error);
+        this.showError('Authetication failed', error);
       });
   }
 

@@ -12,7 +12,7 @@
 								<span class="glyphicon glyphicon-minus"></span>
 							</button>
 						</span>
-						<input type="text" class="form-control input-number" [(ngModel)]="product.count" value="{{product.count}}">
+						<input type="text" class="form-control input-number" (change)="recalculate()" [(ngModel)]="product.count" value="{{product.count}}">
 						<span class="input-group-btn">
 							<button type="button" (click)="select(product)" class="btn btn-success btn-number" data-type="plus">
 								<span class="glyphicon glyphicon-plus"></span>

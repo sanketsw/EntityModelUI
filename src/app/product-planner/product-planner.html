@@ -18,7 +18,7 @@
 		<span [class.red]="customer.expiry < 60" class="row" style="font-size: 110%;">Expires in <span class="Bold"> {{customer.expiry}} </span> days</span>
 		<div class="row">
 			<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
-			<span [class.differenceGreen]="customer.difference > -1" [class.differenceRed]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{customer.difference}}</span>
+			<span [class.differenceGreen]="plannedPrice - initialPrice > -1" [class.differenceRed]="plannedPrice - initialPrice < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{plannedPrice - initialPrice}}</span>
 		</div>
 		<hr class="Center" />
 	</div>
@@ -32,7 +32,7 @@
 						<div class="pm-input">
 							<div class="pm-input-left-button"><p-commandLink (click)="deSelect(product)"><span class="miniButtonRed">-</span></p-commandLink></div>
 						
-							<div class="pm-input-center-input"><input class="miniInput" type="test" [(ngModel)]="product.count" (change)="recalculate()" value="{{product.count}}"/></div>
+							<div class="pm-input-center-input"><input class="miniInput" type="test" [ngModel]="product.count" value="{{product.count}}" (change)="recalculate()"/></div>
 						
 							<div class="pm-input-right-button"><p-commandLink (click)="select(product)"><span class="miniButtonGreen">+</span></p-commandLink></div>
 						</div>
@@ -44,7 +44,6 @@
 	<div class="row" style="margin-top:10px;">
 		<div style="text-align: right;">Initial earnings: {{initialPrice}}</div>
 		<div style="text-align: right;">Planned earnings: {{plannedPrice}}</div>
-		<div style="text-align: right;">Difference: {{plannedPrice - initialPrice}}</div>
 	</div>
 	
 	<div class="row marginTop10" style="text-align: right;">

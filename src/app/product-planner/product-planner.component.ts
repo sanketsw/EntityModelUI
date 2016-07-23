@@ -41,6 +41,7 @@ export class ProductPlannerComponent implements OnInit {
     for (let currentProduct of products) {
       this.plannedPrice += (currentProduct.price * currentProduct.count);
     }
+	this.customer.newPlanDifference = this.plannedPrice - this.initialPrice;
   }
 
   calculateInitialPrice(products) {

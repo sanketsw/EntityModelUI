@@ -46,4 +46,10 @@
 		<div style="text-align: right;">Planned earnings: {{plannedPrice}}</div>
 		<div style="text-align: right;">Difference: {{plannedPrice - initialPrice}}</div>
 	</div>
+	
+	<div class="row marginTop10" style="text-align: right;">
+		<div class="col-xs-12">
+			<button id="submitPlan" style="width: 50%; max-width: 200px" pButton type="button" (click)="reviewPlan()" icon="fa-check" label="Review details"></button>
+		</div>
+	</div>
 </div>

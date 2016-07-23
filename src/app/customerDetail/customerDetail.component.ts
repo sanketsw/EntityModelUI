@@ -39,7 +39,7 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   newPlan() {
-    this.router.navigate(['/planDetail']);
+    this.router.navigate(['/product-planner']);
   }
 
 

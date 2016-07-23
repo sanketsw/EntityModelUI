@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InputText, Password, Panel, DataList } from 'primeng/primeng';
+import { Button, InputText, Password, Panel, DataList } from 'primeng/primeng';
 import { Router } from '@angular/router';
 import { Accordion } from 'primeng/primeng';
 import { AccordionTab } from 'primeng/primeng';
@@ -14,7 +14,7 @@ import { Product } from '../model/product';
   styleUrls: [
     'app/product-planner/product-planner.css'
   ],
-  directives: [InputText, Password, Panel, DataList, Accordion, AccordionTab],
+  directives: [Button, InputText, Password, Panel, DataList, Accordion, AccordionTab],
   providers: [ProductService, CategoryService]
 })
 
@@ -78,4 +78,7 @@ export class ProductPlannerComponent implements OnInit {
     this.recalculate();
   }
 
+  reviewPlan() {
+    this.router.navigate(['/planDetail']);
+  }
 }

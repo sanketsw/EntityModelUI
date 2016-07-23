@@ -4,10 +4,11 @@ import {Router} from '@angular/router';
 
 import { Customer } from '../model/customer';
 import { ProductService } from '../services/product.service';
+import { MessageService } from '../services/message.service';
 import { CustomerService } from '../services/customer.service';
 import { ActionService } from '../services/action.service';
 import { Product } from '../model/product';
-import { Comment } from '../model/comment';
+import { Message } from '../model/message';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class PlanDetailComponent implements OnInit {
   constructor(private router: Router,
     private productService: ProductService,
     private actionService: ActionService,
-    private customerService: CustomerService) {
+    private customerService: CustomerService,
+    private messageService: MessageService) {
     // sessionStorage.setItem('loggedIn', 'false');
   }
 
@@ -51,8 +53,6 @@ export class PlanDetailComponent implements OnInit {
       this.actions = actions;
       this.selectedAction = actions[0].value;
     });
-    sessionStorage.setItem('loggedIn', 'false');
-
   }
 
   back() {
@@ -60,27 +60,22 @@ export class PlanDetailComponent implements OnInit {
   }
 
   submitPlan() {
-    let comment: Comment = {
+    let myMessage: Message = {
       description: this.comment,
       event: this.selectedAction,
-      user: 'Brad'
+      user: 'Sanket',
+      role: 'Exec',
+      customer: this.customer.name
     };
-    let comments: Comment[] = JSON.parse(localStorage.getItem('comments'));
-    if (comments == null) {
-      comments = [];
-    }
-    comments.push(comment);
+    this.messageService.updateMessage(myMessage);
 
-    localStorage.setItem('comments', JSON.stringify(comments));
-
-    // Send SMS to customer / pricer
+    // TODO Send SMS to customer / pricer
 
     // Set customer status as proposed
     this.customer.status = 'Proposed';
-    localStorage.setItem('customer', JSON.stringify(this.customer));
-
     this.customerService.updateCustomer(this.customer);
 
+    localStorage.setItem('customer', JSON.stringify(this.customer));
     this.router.navigate(['/customerDetail']);
   }
 

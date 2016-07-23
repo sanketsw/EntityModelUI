@@ -15,10 +15,10 @@ var Modena = {
 		this.topbarMenuClick = false;
 
         //remove transform on Firefox Mobile
-        // Sanket: $.browser is null on Chrome hence commented out.
-        if(this.mobile /*&& $.browser.mozilla */) {
-            this.mobileMenuButton.addClass('no-transform');
-            this.menu.addClass('no-transform');
+        // Sanket -  $.browser is null on Chrome hence commented out. used navigator
+        if(this.mobile && navigator.userAgent.search("Firefox") > -1 /* && $.browser.mozilla */) {
+            // this.mobileMenuButton.addClass('no-transform');
+            // this.menu.addClass('no-transform');
         }
 
         this.bindEvents();

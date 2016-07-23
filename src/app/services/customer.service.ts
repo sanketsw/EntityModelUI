@@ -17,10 +17,21 @@ export class CustomerService {
     }
   }
 
+  getCustomer(name: string) {
+    return this.getCustomers().then(customers => {
+      for (let c of customers) {
+        if (c.name === name) {
+          return Promise.resolve(c);
+        }
+      }
+    });
+
+  }
+
   updateCustomer(customer: Customer) {
     this.getCustomers().then(customers => {
-    console.log('customers');
-    console.log(customers);
+      console.log('customers');
+      console.log(customers);
       let current: Customer[] = customers;
       let newList: Customer[] = [];
       for (let c of current) {

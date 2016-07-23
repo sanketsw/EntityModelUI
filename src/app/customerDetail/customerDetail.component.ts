@@ -29,7 +29,7 @@ export class CustomerDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.customer = JSON.parse(localStorage.getItem('customer'));
+    this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.customer.difference = -1467;
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
   }

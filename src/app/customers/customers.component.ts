@@ -33,7 +33,7 @@ export class CustomersComponent implements OnInit {
 
   viewCustomer(customer: Customer) {
       this.selectedCustomer = customer;
-      localStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
+      sessionStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
       this.router.navigate(['/customerDetail']);
   }
 

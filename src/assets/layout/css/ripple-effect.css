@@ -27,13 +27,13 @@
        -o-transform:scale(0);
           transform:scale(0);
 }
-
+/* Sanket - Animation stopped menu item to work on firefox hence fixed to ease */
 .animate {
 	-webkit-animation:ripple 0.65s linear;
-   -moz-animation:ripple 0.65s linear;
+   -moz-animation:0s ease 0s normal none 1 running none;
     -ms-animation:ripple 0.65s linear;
      -o-animation:ripple 0.65s linear;
-        animation:ripple 0.65s linear;
+        animation:0s ease 0s normal none 1 running none;
 }
 
 @-webkit-keyframes ripple {

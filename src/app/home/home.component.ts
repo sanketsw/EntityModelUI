@@ -8,89 +8,72 @@ import { User } from '../model/user';
 
 
 @Component({
-    selector: 'as-home',
-    templateUrl: 'app/home/home.html',
-    styleUrls: [
-        'app/home/home.css'
-    ],
-    directives: [Accordion, AccordionTab, Growl, DataTable, Column, Dialog, Button],
-    providers: [UserService]
+  selector: 'as-home',
+  templateUrl: 'app/home/home.html',
+  styleUrls: [
+    'app/home/home.css'
+  ],
+  directives: [Accordion, AccordionTab, Growl, DataTable, Column, Dialog, Button],
+  providers: [UserService]
 })
 
 export class HomeComponent implements OnInit {
-    msgs: Message[];
-    users: User[];
+  msgs: Message[];
+  users: User[];
 
-    displayDialog: boolean;
+  displayDialog: boolean;
 
-    user: User = new User();
+  user: User;
 
-    selectedUser: User;
+  selectedUser: User;
 
-    newUser: boolean;
+  newUser: boolean;
 
-    constructor(private userService: UserService) { }
+  constructor(private userService: UserService) { }
 
-    getUsers() {
-        this.userService.getUsers().then(users => this.users = users);
+  getUsers() {
+    this.userService.getUsers().then(users => this.users = users);
+  }
+
+  ngOnInit() {
+    this.getUsers();
+  }
+
+
+  onTabClose(event) {
+    this.msgs = [];
+    console.log('Tab Closed');
+    this.msgs.push({ severity: 'info', summary: 'Tab Closed', detail: 'Index: ' + event.index });
+  }
+
+  onTabOpen(event) {
+    this.msgs = [];
+    console.log('Tab Opened');
+    this.msgs.push({ severity: 'info', summary: 'Tab Expanded', detail: 'Index: ' + event.index });
+  }
+
+  showDialogToAdd() {
+    this.newUser = true;
+    this.displayDialog = true;
+  }
+
+  save() {
+    if (this.newUser) {
+      this.users.push(this.user);
+    } else {
+      this.users[this.findSelectedUserIndex()] = this.user;
     }
+    this.user = null;
+    this.displayDialog = false;
+  }
 
-    ngOnInit() {
-        this.getUsers();
-    }
+  delete() {
+    this.users.splice(this.findSelectedUserIndex(), 1);
+    this.user = null;
+    this.displayDialog = false;
+  }
 
-
-    onTabClose(event) {
-        this.msgs = [];
-        console.log('Tab Closed');
-        this.msgs.push({ severity: 'info', summary: 'Tab Closed', detail: 'Index: ' + event.index });
-    }
-
-    onTabOpen(event) {
-        this.msgs = [];
-        console.log('Tab Opened');
-        this.msgs.push({ severity: 'info', summary: 'Tab Expanded', detail: 'Index: ' + event.index });
-    }
-
-    showDialogToAdd() {
-        this.newUser = true;
-        this.user = new User();
-        this.displayDialog = true;
-    }
-
-    save() {
-        if (this.newUser) {
-            this.users.push(this.user);
-        } else {
-            this.users[this.findSelectedUserIndex()] = this.user;
-        }
-        this.user = null;
-        this.displayDialog = false;
-    }
-
-    delete() {
-        this.users.splice(this.findSelectedUserIndex(), 1);
-        this.user = null;
-        this.displayDialog = false;
-    }
-
-    onRowSelect(event) {
-        this.newUser = false;
-        this.user = this.cloneUser(event.data);
-        this.displayDialog = true;
-    }
-
-    cloneUser(c: User): User {
-        let user = new User();
-        for (let prop in c) {
-            if (c[prop] != null) {
-                user[prop] = c[prop];
-            }
-        }
-        return user;
-    }
-
-    findSelectedUserIndex(): number {
-        return this.users.indexOf(this.selectedUser);
-    }
+  findSelectedUserIndex(): number {
+    return this.users.indexOf(this.selectedUser);
+  }
 }

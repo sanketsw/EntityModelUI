@@ -28,6 +28,11 @@ export class AppComponent implements AfterViewInit {
     Modena.init();
   }
 
+  cleanup() {
+    localStorage.clear();
+    this.router.navigate(['/']);
+  }
+
   logout() {
     sessionStorage.setItem('loggedIn', 'false');
     console.log('user logged out ');

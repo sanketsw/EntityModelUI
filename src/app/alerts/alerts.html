@@ -1,0 +1,18 @@
+<div class="marginTop10">
+	<div class="row">
+		<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
+		<span class="col-xs-6 Center Bold">Customer Details</span>
+	</div>
+	<hr class="Center" />
+</div>
+
+<div *ngFor="let m of messages">
+	<div class="Card ShadowEffect {{getMessageColorClass(m)}} White" (click)='toCustomer(m)'>
+		<h2 class="CardTopic White FontRobotoRegular BorderBottom Fs18"><span class="FontBold Fs20">{{m.customer}}</span> - Action by {{m.role}} <br/> {{m.event}} </h2>
+		<div class="EmptyBox5"></div>
+		<div class="Container100 Fs14 FontRobotoLight">14 hours ago by {{m.user}}</div>
+		<div class="EmptyBox5"></div>
+		<div class="Container100 Fs16 FontRobotoRegular"> {{m.description}} </div>
+	</div>
+	<div class="EmptyBox10"></div>
+</div>

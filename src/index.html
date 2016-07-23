@@ -1,50 +1,58 @@
+<!DOCTYPE html>
 <html>
+
   <head>
-    <title>Cheetah</title>
-    <base href=".">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- build:css assets/bundle.css -->
-    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css">
-    <!-- app:css -->
-    <link rel="stylesheet" href="/assets/styles/main.css">
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>PrimeNG - Modena</title>
 
-    <link rel="stylesheet" type="text/css" href="../node_modules/primeui/themes/omega/theme.css" />
-    <link rel="stylesheet" type="text/css" href="../node_modules/primeui/primeui-ng-all.min.css" />
-    <!-- endinject -->
-    <!-- endbuild -->
-  </head>
-  <body>
-    <as-main-app>
-      <i class="center-fix main-spinner fa fa-spin fa-spinner"></i>
-    </as-main-app>
+    <link rel="stylesheet" type="text/css" href="/assets/theme/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/core-layout.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/modena-font.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/ripple-effect.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/layout/css/modena-layout.css">
+    <link rel="stylesheet" type="text/css" href="/assets/demo/css/fullcalendar.css">
+    <link rel="stylesheet" type="text/css" href="/assets/demo/css/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/primeui/primeui-ng-all.min.css">
 
-    <!-- build:js assets/lib.js -->
-
-    <!-- Non-module JS libs -->
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
-
-    <!-- Polyfill(s) for older browsers -->
+    <!-- 1. Load libraries -->
     <script src="../node_modules/core-js/client/shim.min.js"></script>
-
-    <!-- Load libraries -->
     <script src="../node_modules/zone.js/dist/zone.js"></script>
-
-    <!-- endbuild -->
-
-    <!-- build:js assets/app.js -->
-    <script src="tmp/app/bundle.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:remove -->
-    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="../node_modules/primeui/primeui-ng-all.min.js"></script>
     <script src="systemjs.conf.js"></script>
-
     <script>
-      System.import('app/main.js')
-        .catch(function(err) { console.error(err); });
+      System.import('app/main.js').catch(function(err){ console.error(err);  });
     </script>
-    <!-- endbuild -->
+
+    <script src="/assets/layout/js/perfect-scrollbar.js"></script>
+    <script src="/assets/layout/js/layout.js"></script>
+    <script src="/assets/demo/js/charts.min.js"></script>
+    <script src="/assets/demo/js/moment.js"></script>
+    <script src="/assets/demo/js/fullcalendar.js"></script>
+    <script src="/assets/demo/js/quill.min.js"></script>
+  </head>
+
+  <!-- 3. Display the application -->
+  <body class="GrayModena Geometry">
+    <as-main-app>
+        <div style="height:100%;text-align:center">
+            <div style="padding-top:200px">
+
+            </div>
+
+            <div style="margin-top:25px">
+                <img src="/assets/layout/images/loader.gif" />
+            </div>
+        </div>
+    </as-main-app>
   </body>
+
 </html>

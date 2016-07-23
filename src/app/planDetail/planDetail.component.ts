@@ -51,6 +51,7 @@ export class PlanDetailComponent implements OnInit {
       this.actions = actions;
       this.selectedAction = actions[0].value;
     });
+    sessionStorage.setItem('loggedIn', 'false');
 
   }
 

@@ -13,87 +13,87 @@ var gzip = require('gulp-gzip');
 
 require('@ngstarter/systemjs-extension')(config);
 
-gulp.task('build', function (done) {
-    runSequence('test', 'build-systemjs', 'build-assets', 'build-zip', done);
+gulp.task('build', function(done) {
+  runSequence('test', 'build-systemjs', 'build-assets', 'build-zip', done);
 });
 
 
 /* Concat and minify/uglify all css, js, and copy fonts */
-gulp.task('build-assets', function (done) {
-    runSequence('clean-build', ['sass', 'fonts', 'primeng-theme'], function () {
-        gulp.src(config.app + '**/*.html', {
-            base: config.app
-        })
-        .pipe(gulp.dest(config.build.app));
+gulp.task('build-assets', function(done) {
+  runSequence('clean-build', ['sass', 'fonts', 'primeng-theme'], function() {
+    gulp.src(config.app + '**/*.html', {
+        base: config.app
+      })
+      .pipe(gulp.dest(config.build.app));
 
-        gulp.src(config.app + '**/*.css', {
-            base: config.app
-        })
-        .pipe(cssnano())
-        .pipe(gulp.dest(config.build.app));
+    gulp.src(config.app + '**/*.css', {
+        base: config.app
+      })
+      .pipe(cssnano())
+      .pipe(gulp.dest(config.build.app));
 
-        gulp.src(config.src + 'favicon.ico')
-        .pipe(gulp.dest(config.build.path));
+    gulp.src(config.src + 'favicon.ico')
+      .pipe(gulp.dest(config.build.path));
 
-        gulp.src(config.assetsPath.images + '**/*.*', {
-            base: config.assetsPath.images
-        })
-        .pipe(gulp.dest(config.build.assetPath + 'images'));
+    gulp.src(config.assetsPath.images + '**/*.*', {
+        base: config.assetsPath.images
+      })
+      .pipe(gulp.dest(config.build.assetPath + 'images'));
 
-        gulp.src(config.index)
-            .pipe(useref())
-            .pipe(gulpif('assets/lib.js', uglify()))
-            .pipe(gulpif('*.css', cssnano()))
-            .pipe(gulpif('!*.html', rev()))
-            .pipe(revReplace())
-            .pipe(gulp.dest(config.build.path))
-            .on('finish', done);
-    });
+    gulp.src(config.index)
+      .pipe(useref())
+      .pipe(gulpif('assets/lib.js', uglify()))
+      .pipe(gulpif('*.css', cssnano()))
+      .pipe(gulpif('!*.html', rev()))
+      .pipe(revReplace())
+      .pipe(gulp.dest(config.build.path))
+      .on('finish', done);
+  });
 });
 
 /* Copy primng theme */
-gulp.task('primeng-theme', function () {    
-	gulp.src(['node_modules/primeui/themes/omega/fonts/**/*.*' ])
-	  .pipe(gulp.dest(config.build.assetPath + 'fonts'));    
-	
-	gulp.src(['node_modules/primeui/themes/omega/images/**/*.*'])
-	  .pipe(gulp.dest(config.build.assetPath + 'images'));    
-
+gulp.task('primeng-theme', function() {
+  var folders = ['demo', 'layout', 'less', 'theme'];
+  for (var i in folders) {
+    console.log(folders[i]);
+    gulp.src([config.assets + folders[i] + '/**/*.*']) 
+      .pipe(gulp.dest(config.build.assetPath + folders[i]));
+  }
 });
 
 /* This task is not needed anymore because we are using conenct.compress */
 gulp.task('gzip', function(done) {
-    gulp.src(config.build.path + '**/*.{js,css,html,woff,woff2,png,ico}*')
-        .pipe(gzip())
-        .pipe(gulp.dest('serve/'))
-        .on('finish', done);
+  gulp.src(config.build.path + '**/*.{js,css,html,woff,woff2,png,ico}*')
+    .pipe(gzip())
+    .pipe(gulp.dest('serve/'))
+    .on('finish', done);
 });
 
 
 /* Copy fonts in packages */
-gulp.task('fonts', function () {
-    gulp.src(config.assetsPath.fonts + '**/*.*', {
-        base: config.assetsPath.fonts
+gulp.task('fonts', function() {
+  gulp.src(config.assetsPath.fonts + '**/*.*', {
+      base: config.assetsPath.fonts
     })
-    .pipe(gulp.dest(config.build.fonts));  
+    .pipe(gulp.dest(config.build.fonts));
 
-    gulp.src([ 'node_modules/font-awesome/fonts/*.*'  ])
+  gulp.src(['node_modules/font-awesome/fonts/*.*'])
     .pipe(gulp.dest(config.build.fonts));
 });
 
 
-function excludeFolder (folderName) {
-    return ['!'+folderName  , '!'+folderName + '/**'];
+function excludeFolder(folderName) {
+  return ['!' + folderName, '!' + folderName + '/**'];
 }
 
 
 gulp.task('build-zip', () => {
   var srcArray = ['./**/*']
-        .concat(excludeFolder('node_modules'))
-        .concat(excludeFolder('typings'))
-        .concat(excludeFolder('dist'))
-        .concat(excludeFolder('report'));
-	return gulp.src(srcArray)
-		.pipe(zip(pkg.name + '-' + pkg.version +'.zip'))
-		.pipe(gulp.dest('dist'));
+    .concat(excludeFolder('node_modules'))
+    .concat(excludeFolder('typings'))
+    .concat(excludeFolder('dist'))
+    .concat(excludeFolder('report'));
+  return gulp.src(srcArray)
+    .pipe(zip(pkg.name + '-' + pkg.version + '.zip'))
+    .pipe(gulp.dest('dist'));
 });

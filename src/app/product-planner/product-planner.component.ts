@@ -7,6 +7,7 @@ import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
+import { Customer } from '../model/customer';
 
 @Component({
   selector: 'as-product-planner',
@@ -41,7 +42,7 @@ export class ProductPlannerComponent implements OnInit {
     for (let currentProduct of products) {
       this.plannedPrice += (currentProduct.price * currentProduct.count);
     }
-	this.customer.newPlanDifference = this.plannedPrice - this.initialPrice;
+    this.customer.newPlanDifference = this.plannedPrice - this.initialPrice;
   }
 
   calculateInitialPrice(products) {

@@ -25,3 +25,33 @@ h4 {
 	padding:3px;
 	margin:0px;
 }
+
+.miniButtonGreen {
+	width:25px;
+	display:inline-block;
+	padding:4px;
+	text-align:center;
+	border:1px;
+	border-style:solid;
+	border-color:888888;
+	border-radius:6px;
+	background-color:#44ee44;
+	font-weight:bold;
+	color:white;
+	cursor:pointer;
+}
+
+.miniButtonRed {
+	width:25px;
+	display:inline-block;
+	padding:4px;
+	text-align:center;
+	border:1px;
+	border-style:solid;
+	border-color:888888;
+	border-radius:6px;
+	background-color:#ee4444;
+	font-weight:bold;
+	color:white;
+	cursor:pointer;
+}

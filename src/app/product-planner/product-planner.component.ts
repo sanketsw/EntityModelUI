@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InputText, Password, Panel, DataList } from 'primeng/primeng';
+import { Button, InputText, Password, Panel, DataList } from 'primeng/primeng';
 import { Router } from '@angular/router';
 import { Accordion } from 'primeng/primeng';
 import { AccordionTab } from 'primeng/primeng';
@@ -7,6 +7,7 @@ import { ProductService } from '../services/product.service';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
+import { Customer } from '../model/customer';
 
 @Component({
   selector: 'as-product-planner',
@@ -14,12 +15,13 @@ import { Product } from '../model/product';
   styleUrls: [
     'app/product-planner/product-planner.css'
   ],
-  directives: [InputText, Password, Panel, DataList, Accordion, AccordionTab],
+  directives: [Button, InputText, Password, Panel, DataList, Accordion, AccordionTab],
   providers: [ProductService, CategoryService]
 })
 
 export class ProductPlannerComponent implements OnInit {
 
+  customer: Customer;
   products: Product[];
   categories: Category[];
   selectedProduct: Product;
@@ -40,6 +42,7 @@ export class ProductPlannerComponent implements OnInit {
     for (let currentProduct of products) {
       this.plannedPrice += (currentProduct.price * currentProduct.count);
     }
+    this.customer.newPlanDifference = this.plannedPrice - this.initialPrice;
   }
 
   calculateInitialPrice(products) {
@@ -50,6 +53,7 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customer = JSON.parse(localStorage.getItem('customer'));
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
     this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));
@@ -76,4 +80,7 @@ export class ProductPlannerComponent implements OnInit {
     this.recalculate();
   }
 
+  reviewPlan() {
+    this.router.navigate(['/planDetail']);
+  }
 }

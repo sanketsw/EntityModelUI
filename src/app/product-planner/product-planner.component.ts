@@ -12,8 +12,7 @@ import { Product } from '../model/product';
   selector: 'as-product-planner',
   templateUrl: 'app/product-planner/product-planner.html',
   styleUrls: [
-    'app/product-planner/product-planner.css',
-    'assets/styles/main.css'
+    'app/product-planner/product-planner.css'
   ],
   directives: [InputText, Password, Panel, DataList, Accordion, AccordionTab],
   providers: [ProductService, CategoryService]
@@ -21,6 +20,7 @@ import { Product } from '../model/product';
 
 export class ProductPlannerComponent implements OnInit {
 
+  customer: Customer;
   products: Product[];
   categories: Category[];
   selectedProduct: Product;
@@ -51,6 +51,7 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customer = JSON.parse(localStorage.getItem('customer'));
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
     this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));

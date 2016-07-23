@@ -1,23 +1,41 @@
-<div class="container">
-	<h1>Customers Plan</h1>
+<div>
+	
+	<div class="marginTop10">
+		<div class="row">
+			<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
+			<span class="col-xs-6 Center Bold">Customer Details</span>
+		</div>
+		<hr class="Center" />
+	</div>
+
+
+	<div>
+		<span class="row" style="font-size: 250%;font-weight: bold;">{{customer.name}}</span>
+		<div class="row">
+			<span class="col-xs-8" style="font-size: 110%;margin-top: 5px;"> Current revenue: </span>
+			<span class="col-xs-4" style="font-size: 150%;     text-align: right;"> {{customer.revenue}}</span>
+		</div>
+		<span [class.red]="customer.expiry < 60" class="row" style="font-size: 110%;">Expires in <span class="Bold"> {{customer.expiry}} </span> days</span>
+		<div class="row">
+			<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
+			<span [class.differenceGreen]="customer.difference > -1" [class.differenceRed]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{customer.difference}}</span>
+		</div>
+		<hr class="Center" />
+	</div>
 	
 	<p-accordion>
 		<p-accordionTab *ngFor="let category of categories" header="{{category.name}}">
 			<div *ngFor="let product of products">
-				<div *ngIf="product.categoryId == category.id" class="row" style="margin-top:10px;">
-					<div class="col-xs-7" [class.bold]="product.count > 0">{{product.name}} <br/> <span style="font-size: 90%;"> </span></div>
-					<div class="input-group" style="margin-right:10px">
-						<span class="input-group-btn">
-							<button type="button" (click)="deSelect(product)" class="btn btn-danger btn-number" data-type="minus">
-								<span class="glyphicon glyphicon-minus"></span>
-							</button>
-						</span>
-						<input type="text" class="form-control input-number" (change)="recalculate()" [(ngModel)]="product.count" value="{{product.count}}">
-						<span class="input-group-btn">
-							<button type="button" (click)="select(product)" class="btn btn-success btn-number" data-type="plus">
-								<span class="glyphicon glyphicon-plus"></span>
-							</button>
-						</span>
+				<div *ngIf="product.categoryId == category.id" class="product-row">
+					<div class="product-name" [class.bold]="product.count > 0">{{product.name}}</div>
+					<div class="product-pm">
+						<div class="pm-input">
+							<div class="pm-input-left-button"><p-commandLink (click)="deSelect(product)"><span class="miniButtonRed">-</span></p-commandLink></div>
+						
+							<div class="pm-input-center-input"><input class="miniInput" type="test" [(ngModel)]="product.count" (change)="recalculate()" value="{{product.count}}"/></div>
+						
+							<div class="pm-input-right-button"><p-commandLink (click)="select(product)"><span class="miniButtonGreen">+</span></p-commandLink></div>
+						</div>
 					</div>
 				</div>
 			</div>

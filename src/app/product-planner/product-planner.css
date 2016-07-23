@@ -1,57 +1,146 @@
-h4 {
-	color: gray;
-	float: right;
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-
-
+.Bold {
+  font-weight: bold;
+}
+.Red {
+  color: red;
+}
+.Green {
+  color: green;
+}
+.revenue {
+  color: gray;
+  float: right;
+  font-size: 200%;
+  padding-top: 15px;
+}
+.customerName {
+  font-size: 200%;
+}
+.differenceRed {
+  color: red;
+}
+.differenceGreen {
+  color: green;
+}
+.renewal {
+  padding-top: 15px;
+  display: inline-block;
+}
+.FRight {
+  float: right;
+}
+.FLeft {
+  float: left;
+}
+.Center {
+  text-align: center;
+ display: block;
+}
 .marginTop10 {
 	margin-top: 10px;
 }
-
-.duedate {
-	    color: red;
+.padding10 {
+  padding: 10px;
+}
+.marginBot10 {
+  margin-bottom: 10px;
+}
+.myButton {
+  width: 50px;
 }
 
-.selected {
-	background-color:#eeffee;
-
+.product-row{
+	display:table;
+	width:100%;
+	height: 35px;
 }
 
-.bold {
-	font-weight: bold;
+.product-name{
+	display:table-cell;
 }
 
-.miniButton span {
-	padding:3px;
+.product-pm{
+	display:table-cell;
+	width:100px;
+}
+
+.pm-input{
+	display:inline-block;
+	width:90px;
+	position:relative;
+}
+
+.pm-input-left-button{
+	display:inline-block;
+	width:30px;
+	position:absolute;
+	top:-15px;
+	left:0px;
+}
+
+.pm-input-center-input{
+	display:inline-block;
+	width:30px;
+	position:absolute;
+	top:-15px;
+	left:30px;
+}
+
+.pm-input-right-button{
+	display:inline-block;
+	width:30px;
+	position:absolute;
+	top:-15px;
+	left:60px;
+}
+
+.miniInput{
+	width:30px;
+	height:30px;
+	border:1px;
+	border-color:#888888;
+	border-style:solid;
+	text-align:center;
+	box-sizing: border-box;
 	margin:0px;
 }
 
 .miniButtonGreen {
-	width:25px;
+	width:30px;
+	height:30px;
+	box-sizing: border-box;
 	display:inline-block;
 	padding:4px;
 	text-align:center;
 	border:1px;
 	border-style:solid;
-	border-color:888888;
-	border-radius:6px;
-	background-color:#44ee44;
+	border-color:#888888;
+	border-radius:0px 6px 6px 0px;
+	background-color:#44bb44;
 	font-weight:bold;
 	color:white;
 	cursor:pointer;
+	margin:0px;
 }
 
 .miniButtonRed {
-	width:25px;
+	width:30px;
+	height:30px;
+	box-sizing: border-box;
 	display:inline-block;
 	padding:4px;
 	text-align:center;
 	border:1px;
 	border-style:solid;
-	border-color:888888;
-	border-radius:6px;
-	background-color:#ee4444;
+	border-color:#888888;
+	border-radius:6px 0px 0px 6px;
+	background-color:#cc4444;
 	font-weight:bold;
 	color:white;
 	cursor:pointer;
+	margin:0px;
 }

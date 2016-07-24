@@ -83,4 +83,8 @@ export class ProductPlannerComponent implements OnInit {
   reviewPlan() {
     this.router.navigate(['/planDetail']);
   }
+  
+  back() {
+    this.router.navigate(['/customerDetail']);
+  }
 }

@@ -56,7 +56,7 @@ export class PlanDetailComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['/customerDetail']);
+    this.router.navigate(['/product-planner']);
   }
 
   submitPlan() {

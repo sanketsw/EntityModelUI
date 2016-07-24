@@ -19,11 +19,8 @@ import { User } from '../model/user';
     'app/planDetail/planDetail.css'
   ],
   directives: [Button, InputTextarea, Password, Panel, Dropdown],
-<<<<<<< HEAD
   providers: [ProductService, ActionService, CustomerService, MessageService]
-=======
-  providers: [MessageService, ProductService, ActionService, CustomerService]
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
+
 })
 
 export class PlanDetailComponent implements OnInit {
@@ -56,13 +53,9 @@ export class PlanDetailComponent implements OnInit {
 
 
   ngOnInit() {
-<<<<<<< HEAD
+
     this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
-=======
-    this.customer = JSON.parse(sessionStorage.getItem('customer'));
-    this.customer.difference = -1467;
->>>>>>> branch 'master' of https://github.com/sanketsw/cheetah.git
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.productService.getProductsInNewPlan().then(newProducts => this.newProducts = newProducts);
     this.actionService.getActions(this.user.role).then(actions => {
@@ -72,6 +65,9 @@ export class PlanDetailComponent implements OnInit {
   }
 
   back() {
+    if (this.customer.status) {
+      this.router.navigate(['/customerDetail']);
+    }
     this.router.navigate(['/product-planner']);
   }
 

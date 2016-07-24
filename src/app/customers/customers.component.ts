@@ -23,15 +23,23 @@ export class CustomersComponent implements OnInit {
 
   selectedCustomer: Customer;
 
+  user: User;
+
+  needsAction(customer: Customer) {
+    if (customer.actionOwner === this.user.role || !customer.status ) {
+      return true;
+    }
+  }
+
   constructor(private router: Router, private customerService: CustomerService) {
     // sessionStorage.setItem('loggedIn', 'false');
   }
 
 
   ngOnInit() {
-    let user: User = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
     this.customerService.getCustomers().then(customers => {
-      if (user.role === 'Pricer') {
+      if (this.user.role === 'Pricer') {
         let filterList: Customer[] = [];
         for (let c of customers) {
           if (c.actionOwner === 'Pricer') {

@@ -1,5 +1,5 @@
 <div class="row">
-	<!--span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span-->
+	<span *ngIf="nonCustomer()" class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
 	<span class="col-xs-12 Center FontBold">Customer Details</span>
 	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
@@ -24,8 +24,9 @@
 <div class="EmptyBox10"></div>
 
 <div class="Card ShadowEffect White " [class.OrangeBack]="needsAction()" [class.GreenBack]="! needsAction()">
-	<h2 class="CardTopic White BorderBottom" style="font-weight:bold;">{{customer.status}} plan
-		<span *ngIf="needsAction()" class="Fright badge RedBack Fs18 FontRobotoLight" style="font-weight:normal;">Needs your action</span> </h2>
+	<h2 class="CardTopic White BorderBottom" style="font-weight:bold;">{{(customer.status ? customer.status : 'Proposed')}} plan
+		<span *ngIf="needsAction()" class="Fright badge RedBack Fs18 FontRobotoLight" style="font-weight:normal;" (click)="newPlan()">Needs your action</span>
+		<span *ngIf="!needsAction(customer)" class="Fright badge BoldGrayBack Fs18 FontRobotoLight" style="font-weight:normal;">No action needed from you</span></h2>
 	<div class="EmptyBox5"></div>
 	<div *ngIf="customer.status == null" class="Container100 FontRobotoLight">No plan has been proposed yet.</div>
 	<div *ngIf="customer.status">
@@ -44,7 +45,7 @@
 <div class="EmptyBox10"></div>
 
 <div class="Card ShadowEffect" *ngIf="displayUpdates()">
-	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Updates </h2>
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Status Updates </h2>
 	<div *ngFor="let m of messages">
 		<div class="Separator"> </div>
 		<div class="EmptyBox5"></div>

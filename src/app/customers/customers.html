@@ -1,19 +1,28 @@
 <div class="row">
-	<span class="col-xs-12 Center FontBold">Know your Customers</span>
+	<span class="col-xs-12 Center FontBold">Know your Customer</span>
 	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
-<div class="row" style="padding: -15px;font-size: 90%; color: gray;">
-	<span class="col-xs-8">Customer Subscription</span>
-	<span class="col-xs-4"  style="text-align: center;">Revenue</span>
-</div>
-<hr class="Center" style="margin-top: 0px;"/>
-<div class="">
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Subscription
+		<span class="Fright">Status</span></h2>
 	<div *ngFor="let customer of customers" (click)="viewCustomer(customer)">
-		<span class="customerName">{{customer.name}}</span>
-		<span class="revenue"><span style="font-size: 60%;">$</span>{{customer.revenue}}</span>
-		<span [class.red]="customer.expiry < 60" class="row">Expires in {{customer.expiry}} days</span>
-		<br/>
-		<hr class="Center" />
+		<div class="Separator"> </div>
+		<div class="EmptyBox5"></div>
+		<div class="Container100">
+			<span class="LeadenGreen Fs24"> {{customer.name}} </span>
+			<span class="Fright">{{customer.status}}</span>
+		</div>
+		<div class="Container60">
+			<span [class.Orange]="customer.expiry < 60" class="FontRobotoLight Fs18">Expires in <span class="FontBold">{{customer.expiry}}</span> days</span>
+			<br/> 	<span class="FontRobotoLight Fs18">$ {{customer.revenue}} revenue</span>
+		</div>
+		<div class="Container40">
+			<div class="EmptyBox5"></div>
+			<span *ngIf="needsAction(customer)" class="Fright badge OrangeBack Fs18 FontRobotoLight" style="font-weight:normal;">Needs your action</span>
+			<div class="EmptyBox5"></div>
+		</div>
+		<div class="EmptyBox5"></div>
 	</div>
 </div>
+<div class="EmptyBox10"></div>

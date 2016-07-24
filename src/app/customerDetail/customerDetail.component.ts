@@ -101,8 +101,7 @@ export class CustomerDetailComponent implements OnInit {
     if (this.customer.status) {
       this.router.navigate(['/planDetail']);
     }
-    // TODO Product planner
-    this.router.navigate(['/planDetail']);
+    this.router.navigate(['/product-planner']);
   }
 
 }

@@ -69,13 +69,13 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   select(product: Product) {
-    product.count ++;
+    product.count++;
     this.recalculate();
   }
 
   deSelect(product: Product) {
     if (product.count > 0) {
-      product.count --;
+      product.count--;
     }
     this.recalculate();
   }
@@ -83,7 +83,7 @@ export class ProductPlannerComponent implements OnInit {
   reviewPlan() {
     this.router.navigate(['/planDetail']);
   }
-  
+
   back() {
     this.router.navigate(['/customerDetail']);
   }

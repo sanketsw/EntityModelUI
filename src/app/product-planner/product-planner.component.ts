@@ -53,7 +53,7 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customer = JSON.parse(localStorage.getItem('customer'));
+    this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.categoryService.getCategories().then(categories => this.categories = categories);
     this.productService.getProductsInCurrentPlan().then(products => this.calculate(products));

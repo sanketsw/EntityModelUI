@@ -53,12 +53,14 @@ gulp.task('build-assets', function(done) {
 
 /* Copy primng theme */
 gulp.task('primeng-theme', function() {
-  var folders = ['demo', 'layout', 'less', 'theme'];
-  for (var i in folders) {
-    console.log(folders[i]);
-    gulp.src([config.assets + folders[i] + '/**/*.*']) 
-      .pipe(gulp.dest(config.build.assetPath + folders[i]));
-  }
+  gulp.src([config.assets + 'layout/fonts/**/*.*'])
+    .pipe(gulp.dest(config.build.fonts));
+  gulp.src([config.assets + 'layout/images/**/*.*'])
+    .pipe(gulp.dest(config.build.images));
+  gulp.src(config.assets + 'layout/images/**/*.*', {
+      base: config.assets
+    })
+    .pipe(gulp.dest(config.build.assetPath));
 });
 
 /* This task is not needed anymore because we are using conenct.compress */

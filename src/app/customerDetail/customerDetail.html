@@ -26,7 +26,7 @@
 <div class="Card ShadowEffect White " [class.OrangeBack]="needsAction()" [class.GreenBack]="! needsAction()">
 	<h2 class="CardTopic White BorderBottom" style="font-weight:bold;">{{(customer.status ? customer.status : 'Proposed')}} plan
 		<span *ngIf="needsAction()" class="Fright badge RedBack Fs18 FontRobotoLight" style="font-weight:normal;" (click)="newPlan()">Needs your action</span>
-		<span *ngIf="!needsAction(customer)" class="Fright badge BoldGrayBack Fs18 FontRobotoLight" style="font-weight:normal;">No action needed from you</span></h2>
+		<span *ngIf="!needsAction(customer)" class="Fright badge BoldGrayBack Fs18 FontRobotoLight" style="font-weight:normal;">No action for you</span></h2>
 	<div class="EmptyBox5"></div>
 	<div *ngIf="customer.status == null" class="Container100 FontRobotoLight">No plan has been proposed yet.</div>
 	<div *ngIf="customer.status">

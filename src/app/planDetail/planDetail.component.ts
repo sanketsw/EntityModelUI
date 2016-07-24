@@ -67,7 +67,12 @@ export class PlanDetailComponent implements OnInit {
   back() {
     if (this.customer.status) {
       this.router.navigate(['/customerDetail']);
+    } else {
+      this.router.navigate(['/product-planner']);
     }
+  }
+
+  modify() {
     this.router.navigate(['/product-planner']);
   }
 

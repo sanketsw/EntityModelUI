@@ -1,7 +1,7 @@
 <div class="row">
 	<span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
 	<span class="col-xs-12 Center FontBold">{{ (customer.status
-? 'Proposed Plan':'New Plan')}} </span>
+? 'Modify Proposed Plan':'Review and Submit your New Plan')}} </span>
 	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
@@ -16,13 +16,15 @@
 		<div class="EmptyBox10"></div>
 		<div class="FontRobotoRegular Fs18">{{ (user.role === 'Customer' ? 'Proposed subscription cost':'Projected revenue for proposed plan:')}} </div>
 	</div>
-	<div class="Container40 FontRobotoLight Fs50"><span class="Fright">$ {{customer.revenue }}</span></div>
+	<div class="Container40 FontRobotoLight Fs50"><span class="Fright">$ {{customer.revenue  + customer.newPlanDifference}}</span></div>
 	<div class="EmptyBox10"></div>
 </div>
 <div class="EmptyBox10"></div>
 
 <div class="Card ShadowEffect">
-	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Subscription details</h2>
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Subscription details
+		<button class="Fright RaisedButton" id="Plan" pButton type="button" (click)="modify()" icon="fa-pencil"></button>
+		<div class="EmptyBox5"></div></h2>
 	<div *ngFor="let p of newProducts">
 		<div class="Separator"> </div>
 		<div class="EmptyBox5"></div>
@@ -37,13 +39,13 @@
 </div>
 <div class="EmptyBox10"></div>
 
-<div class="Card ShadowEffect White"  *ngIf="! acceptedAndCustomer()">
+<div class="Card ShadowEffect White" *ngIf="! acceptedAndCustomer()">
 	<div class="Container100 Responsive100">
 		<div class="ContainerIndent">
 			<p-dropdown [options]="actions" [(ngModel)]="selectedAction" [autoWidth]="false"></p-dropdown>
 			<textarea pInputTextarea [(ngModel)]="comment" placeholder="Your Message" rows="5" style="    background-color: #E0E0E0; width: 80%;     border-radius: 3px;"></textarea>
 			<div class="EmptyBox5"></div>
-			<button id="submitPlan" class="Fright" pButton type="button" (click)="submitPlan()" icon="fa-check" label="{{selectedAction}}"></button>
+			<button id="submitPlan" class="Fright RaisedButton" pButton type="button" (click)="submitPlan()" icon="fa-check" label="{{selectedAction}}"></button>
 		</div>
 	</div>
 </div>

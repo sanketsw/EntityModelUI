@@ -30,6 +30,7 @@ module.exports = function () {
             path: 'build/',
             app: 'build/app/',
             fonts: 'build/fonts',
+            images: 'build/images',
             assetPath: 'build/assets/',
             assets: {
                 lib: {

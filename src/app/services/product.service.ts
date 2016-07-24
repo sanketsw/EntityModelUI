@@ -4,7 +4,7 @@ import { PRODUCTS, PRODUCTS_IN_PLAN, PRODUCTS_IN_NEW_PLAN } from './mock-product
 // Don't forget the parentheses! Neglecting them leads to an error that's difficult to diagnose.
 @Injectable()
 export class ProductService {
-    getProducts() {
+    getAllProducts() {
         return Promise.resolve(PRODUCTS);
     }
 

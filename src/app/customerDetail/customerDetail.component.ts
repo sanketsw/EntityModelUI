@@ -86,7 +86,9 @@ export class CustomerDetailComponent implements OnInit {
     if (!this.customer.status) {
       this.customer.actionOwner = 'Exec';
     }
-    this.productService.getProductsInCurrentPlan().then(products => this.products = products);
+    this.productService.getProductsInCurrentPlan().then(products => {
+      this.products = products.filter(product => product.count > 0);
+    });
     this.messages = [];
     this.messageService.getMessagesForCustomer(this.customer.name).then(messages => {
       this.messages = messages.reverse();
@@ -100,8 +102,9 @@ export class CustomerDetailComponent implements OnInit {
   newPlan() {
     if (this.customer.status) {
       this.router.navigate(['/planDetail']);
+    } else {
+      this.router.navigate(['/product-planner']);
     }
-    this.router.navigate(['/product-planner']);
   }
 
 }

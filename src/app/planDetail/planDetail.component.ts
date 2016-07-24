@@ -18,7 +18,7 @@ import { Message } from '../model/message';
     'app/planDetail/planDetail.css'
   ],
   directives: [Button, InputTextarea, Password, Panel, Dropdown],
-  providers: [ProductService, ActionService, CustomerService]
+  providers: [MessageService, ProductService, ActionService, CustomerService]
 })
 
 export class PlanDetailComponent implements OnInit {
@@ -45,7 +45,7 @@ export class PlanDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.customer = JSON.parse(localStorage.getItem('customer'));
+    this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.customer.difference = -1467;
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.productService.getProductsInNewPlan().then(newProducts => this.newProducts = newProducts);

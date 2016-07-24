@@ -6,13 +6,13 @@ import { Message } from '../model/message';
 @Injectable()
 export class MessageService {
   getMessages() {
-    let messages: Message[] = JSON.parse(localStorage.getItem('messages'));
+    let messages: Message[] = JSON.parse(sessionStorage.getItem('messages'));
     console.log('messages');
     console.log(messages);
     if (messages != null && messages.length > 0) {
       return Promise.resolve(messages);
     } else {
-      localStorage.setItem('messages', JSON.stringify(COMMENTS));
+      sessionStorage.setItem('messages', JSON.stringify(COMMENTS));
       return Promise.resolve(COMMENTS);
     }
   }
@@ -32,7 +32,7 @@ export class MessageService {
   updateMessage(message: Message) {
     this.getMessages().then(messages => {
       messages.push(message);
-      localStorage.setItem('messages', JSON.stringify(messages));
+      sessionStorage.setItem('messages', JSON.stringify(messages));
     });
   }
 }

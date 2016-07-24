@@ -1,18 +1,24 @@
-<div class="marginTop10">
-	<div class="row">
-		<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
-		<span class="col-xs-6 Center Bold">Customer Details</span>
-	</div>
-	<hr class="Center" />
+<div class="row">
+	<span class="col-xs-12 Center FontBold">Stay on the top of the list</span>
+	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
-<div *ngFor="let m of messages">
-	<div class="Card ShadowEffect {{getMessageColorClass(m)}} White" (click)='toCustomer(m)'>
-		<h2 class="CardTopic White FontRobotoRegular BorderBottom Fs18"><span class="FontBold Fs20">{{m.customer}}</span> - Action by {{m.role}} <br/> {{m.event}} </h2>
+
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Updates </h2>
+	<div *ngFor="let m of messages">
+		<div class="Separator"> </div>
+		<div class="Container80">
+			<div class="EmptyBox5"></div>
+			<div class="FontRobotoRegular {{getMessageColorClass(m)}}">{{m.role}}: {{m.event}} </div>
+			<div class="FontRobotoRegular LeadenGreen ">{{m.customer}} </div>
+			<div class="EmptyBox5"></div>
+		</div>
+		<div class="Container20">
+			<button class="Fright GrayButton RaisedButton" id="Plan" pButton type="button" (click)="toCustomer(m)" icon="fa-chevron-right"></button>
+		</div>
+		<div class="Container100 FontRobotoLight Fs18"> {{m.description}} <span class="FontRobotoLight Fs16"> - 14 hours ago by {{m.user}}</span></div>
 		<div class="EmptyBox5"></div>
-		<div class="Container100 Fs14 FontRobotoLight">14 hours ago by {{m.user}}</div>
-		<div class="EmptyBox5"></div>
-		<div class="Container100 Fs16 FontRobotoRegular"> {{m.description}} </div>
 	</div>
-	<div class="EmptyBox10"></div>
 </div>
+<div class="EmptyBox10"></div>

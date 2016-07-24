@@ -6,6 +6,7 @@ import { Customer } from '../model/customer';
 import { MessageService } from '../services/message.service';
 import { CustomerService } from '../services/customer.service';
 import { Message } from '../model/message';
+import { User } from '../model/user';
 
 
 @Component({
@@ -32,20 +33,26 @@ export class AlertsComponent implements OnInit {
 
   getMessageColorClass(m: Message) {
     if (m.event.includes('Return')) {
-      return 'OrangeBack';
+      return 'Orange';
     } else if (m.event.includes('Accept')) {
-      return 'GreenBack';
+      return 'Green';
     }
-    return 'BoldGrayBack';
+    return 'BoldGray';
   }
 
 
   ngOnInit() {
-    this.customer = JSON.parse(localStorage.getItem('customer'));
-    // TODO change this to messageForAlertsTemplate variabkle for the screen context
-    this.messageService.getMessages().then(messages => {
-      this.messages = messages.reverse();
-    });
+    let user: User = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.customer = JSON.parse(sessionStorage.getItem('customer'));
+    if (user.role === 'Customer') {
+        this.messageService.getMessagesForCustomer(this.customer.name).then(messages => {
+          this.messages = messages.reverse();
+        });
+    } else {
+      this.messageService.getMessages().then(messages => {
+        this.messages = messages.reverse();
+      });
+    }
   }
 
   back() {

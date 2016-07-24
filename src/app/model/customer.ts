@@ -6,4 +6,5 @@ export interface Customer {
     difference: number;
     newPlanDifference: number;
     status?: string;
+    actionOwner ?: string;
 }

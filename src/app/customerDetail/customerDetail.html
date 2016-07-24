@@ -1,60 +1,73 @@
-<div class="marginTop10">
-	<div class="row">
-		<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
-		<span class="col-xs-6 Center Bold">Customer Details</span>
-	</div>
-	<hr class="Center" />
+<div class="row">
+	<!--span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span-->
+	<span class="col-xs-12 Center FontBold">Customer Details</span>
+	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
 
-<div>
-	<span class="row" style="font-size: 250%;font-weight: bold;">{{customer.name}}</span>
-	<div class="row">
-		<span class="col-xs-8" style="font-size: 110%;margin-top: 5px;"> Current revenue: </span>
-		<span class="col-xs-4" style="font-size: 150%;     text-align: right;"> {{customer.revenue}}</span>
-	</div>
-	<span [class.red]="customer.expiry < 60" class="row" style="font-size: 110%;">Expires in <span class="Bold"> {{customer.expiry}} </span> days</span>
-	<div class="row">
-		<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
-		<span [class.differenceGreen]="customer.difference > -1" [class.differenceRed]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{customer.difference}}</span>
-	</div>
-	<hr class="Center" />
-</div>
+<div class="Fs50 FontBold BoldGray">{{customer.name}}</div>
+<div class="EmptyBox10"></div>
 
-<div class="marginTop10" *ngIf="customer.status == null && customer.expiry < 60">
-	<div class="Red">
-		No plan has been proposed to this customer yet.
-	</div>
-</div>
-
-<div class="marginTop10" *ngIf="customer.status">
-	<div class="Bold">
-		Proposed plan details
-	</div>
-	<div class="row">
-		<div class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for proposed plan:</div>
-		<div [class.Green]="customer.newPlanDifference > -1" [class.Red]="customer.newPlanDifference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;">
-			{{ (customer.newPlanDifference
-			<0? '': '+') + customer.newPlanDifference }} </div>
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic BorderBottom" style="font-weight:bold;">{{ (user.role === 'Customer'
+? 'Current subscription cost':'Current Revenue')}} <span class="Fright FontBold">{{customer.revenue}}</span></h2>
+	<div class="EmptyBox5"></div>
+	<div [class.Orange]="customer.expiry < 60" class="Container100 FontRobotoLight">Subscription expires in <span class="FontBold"> {{customer.expiry}} </span> days</div>
+	<div *ngIf="nonCustomer()">
+		<div class="Container60">
+			<div class="EmptyBox10"></div>
+			<div class="FontRobotoRegular Fs18">Projected revenue on renewal: </div>
 		</div>
-		<hr class="Center" />
+		<div class="Container40 FontRobotoRegular"><span [class.Green]="customer.difference > -1" [class.Orange]="customer.difference < 0" class="Fs50 FontRobotoLight FontBold Fright">{{customer.difference}}</span></div>
 	</div>
+</div>
+<div class="EmptyBox10"></div>
 
-<div class="row padding10">
-	<button class="FRight" id="Plan" *ngIf="customer.status == null" style="width: 50%; max-width: 200px" pButton type="button" (click)="newPlan()" icon="fa-pencil" label="Workout a plan"></button>
-	<button class="FRight" id="Plan" *ngIf="customer.status" style="width: 50%; max-width: 200px" pButton type="button" (click)="newPlan()" icon="fa-pencil" label="Edit proposed plan"></button>
-</div>
+<div class="Card ShadowEffect White " [class.OrangeBack]="needsAction()" [class.GreenBack]="! needsAction()">
+	<h2 class="CardTopic White BorderBottom" style="font-weight:bold;">{{customer.status}} plan
+		<span *ngIf="needsAction()" class="Fright badge RedBack Fs18 FontRobotoLight" style="font-weight:normal;">Needs your action</span> </h2>
+	<div class="EmptyBox5"></div>
+	<div *ngIf="customer.status == null" class="Container100 FontRobotoLight">No plan has been proposed yet.</div>
+	<div *ngIf="customer.status">
+		<div class="Container60">
+			<div class="EmptyBox10"></div>
+			<div class="FontRobotoRegular Fs18">{{ (user.role === 'Customer' ? 'Proposed subscription cost':'Projected revenue for proposed plan:')}} </div>
+		</div>
+		<div class="Container40 FontRobotoRegular Red"><span [class.White]="(customer.newPlanDifference > -1)" class="Fs50 FontRobotoLight Fright">{{ (customer.newPlanDifference
+	<0? '': '+') + customer.newPlanDifference }}</span></div>
+		<div *ngIf="! nonCustomer()" class="FontRobotoRegular">Total <h2 class="CardTopic Fright" style="font-weight: bold;">$ {{customer.revenue + customer.newPlanDifference}}</h2> </div>
+	</div>
+	<div class="EmptyBox10"></div>
+	<button *ngIf='displayPlanButton()' class="Fright GrayButton RaisedButton" id="Plan" pButton type="button" (click)="newPlan()" icon="fa-pencil" label="{{getPlanButtonLabel()}}"></button>
 
-<div class="row marginTop10">
-	<div class="col-xs-12 Bold">
-		Current plan details
+</div>
+<div class="EmptyBox10"></div>
+
+<div class="Card ShadowEffect" *ngIf="displayUpdates()">
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Updates </h2>
+	<div *ngFor="let m of messages">
+		<div class="Separator"> </div>
+		<div class="EmptyBox5"></div>
+		<div class="FontRobotoRegular {{getMessageColorClass(m)}}">{{m.role}}: {{m.event}} </div>
+		<div class="EmptyBox5"></div>
+		<div class="Container100 FontRobotoLight Fs18"> {{m.description}} <span class="FontRobotoLight Fs16"> - 14 hours ago by {{m.user}}</span></div>
+		<div class="EmptyBox5"></div>
 	</div>
 </div>
-<hr class="Center" />
-<div *ngFor="let p of products">
-	<div class="row">
-			<div class="col-xs-8">{{p.name}} <br/> <span style="font-size: 90%;">{{p.description}}</span></div>
-			<div class="col-xs-4" style="text-align: right;">{{p.price}}</div>
+<div class="EmptyBox10"></div>
+
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Current subscription</h2>
+	<div *ngFor="let p of products">
+		<div class="Separator"> </div>
+		<div class="EmptyBox5"></div>
+		<div class="Container60">
+			<span class="LeadenGreen "> {{p.name}} </span> <span class="Fs18">({{p.count}})</span>
+			<br/> <span class="FontRobotoLight Fs18">{{p.description}}</span>
+		</div>
+		<div class="Container40">
+			<div class="EmptyBox5"></div><span class="Fright">{{p.price}}</span></div>
+		<div class="EmptyBox5"></div>
 	</div>
-	<hr class="Center" />
 </div>
+<div class="EmptyBox10"></div>

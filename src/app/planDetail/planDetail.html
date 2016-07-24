@@ -1,67 +1,50 @@
-<div class="marginTop10">
-	<div class="row">
-		<span class="col-xs-3 FLeft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
-		<span class="col-xs-6 Center Bold">New Plan</span>
-	</div>
-	<hr class="Center" />
+<div class="row">
+	<span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
+	<span class="col-xs-12 Center FontBold">{{ (customer.status
+? 'Proposed Plan':'New Plan')}} </span>
+	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
 
-<div>
-	<span class="row" style="font-size: 250%;font-weight: bold;">{{customer.name}}</span>
-	<div class="row">
-		<span class="col-xs-8" style="font-size: 110%;margin-top: 5px;"> Current revenue: </span>
-		<span class="col-xs-4" style="font-size: 150%;     text-align: right;"> {{customer.revenue}}</span>
+<div class="Fs50 FontBold BoldGray">{{customer.name}}</div>
+<div class="EmptyBox10"></div>
+<div class="Card ShadowEffect LeadenGreenBack White">
+	<h2 class="CardTopic White BorderBottom" style="font-weight:bold;">Proposed plan <span [class.White]="(customer.newPlanDifference > -1)" class=" FontRobotoLight Fright">{{ (customer.newPlanDifference
+<0? '': '+') + customer.newPlanDifference }}</span> </h2>
+	<div class="EmptyBox5"></div>
+	<div class="Container60">
+		<div class="EmptyBox10"></div>
+		<div class="FontRobotoRegular Fs18">{{ (user.role === 'Customer' ? 'Proposed subscription cost':'Projected revenue for proposed plan:')}} </div>
 	</div>
-	<span [class.red]="customer.expiry < 60" class="row" style="font-size: 110%;">Expires in <span class="Bold"> {{customer.expiry}} </span> days</span>
-	<div class="row">
-		<span class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for current plan:</span>
-		<span [class.Green]="customer.difference > -1" [class.Red]="customer.difference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;"> {{(customer.difference
-			<0? '': '+') + customer.difference}} </span>
-	</div>
-	<br/>
-	<hr class="Center" />
+	<div class="Container40 FontRobotoLight Fs50"><span class="Fright">$ {{customer.revenue }}</span></div>
+	<div class="EmptyBox10"></div>
 </div>
+<div class="EmptyBox10"></div>
 
-<div class="marginTop10">
-	<div class="Bold">
-		Proposed plan details
-	</div>
-	<div class="row">
-		<div class="col-xs-8" style="font-size: 110%;margin-top: 15px;"> Projected revenue for proposed plan:</div>
-		<div [class.Green]="customer.newPlanDifference > -1" [class.Red]="customer.newPlanDifference < 0" class="col-xs-4" style="  font-size: 250%;     text-align: right;">
-			{{ (customer.newPlanDifference
-			<0? '': '+') + customer.newPlanDifference }} </div>
-		</div>
-	</div>
-	<hr class="Center" />
-
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic" style="font-weight:bold; padding-bottom: 0px;">Subscription details</h2>
 	<div *ngFor="let p of newProducts">
-		<div class="row">
-			<div class="col-xs-8">{{p.name}} <span *ngIf="p.status" style="font-size: 90%; color: green;">({{p.status}})</span>
-				<br/> <span style="font-size: 90%;">{{p.description}}</span></div>
-			<div class="col-xs-4" style="text-align: right;">{{p.price}}</div>
+		<div class="Separator"> </div>
+		<div class="EmptyBox5"></div>
+		<div class="Container60">
+			<span class="LeadenGreen "> {{p.name}} </span> <span class="Fs18">({{p.count}})</span>
+			<br/> <span class="FontRobotoLight Fs18">{{p.description}}</span>
 		</div>
-		<hr class="Center" />
+		<div class="Container40">
+			<div class="EmptyBox5"></div><span class="Fright">{{p.price}}</span></div>
+		<div class="EmptyBox5"></div>
 	</div>
+</div>
+<div class="EmptyBox10"></div>
 
-
-	<div class="row marginTop10">
-		<div class="col-xs-10">
-			<select class="form-control" [(ngModel)]="selectedAction" title="Choose one of the following...">
-				<option *ngFor="let action of actions">{{action.value}}</option>
-			</select>
+<div class="Card ShadowEffect White"  *ngIf="! acceptedAndCustomer()">
+	<div class="Container100 Responsive100">
+		<div class="ContainerIndent">
+			<p-dropdown [options]="actions" [(ngModel)]="selectedAction" [autoWidth]="false"></p-dropdown>
+			<textarea pInputTextarea [(ngModel)]="comment" placeholder="Your Message" rows="5" style="    background-color: #E0E0E0; width: 80%;     border-radius: 3px;"></textarea>
+			<div class="EmptyBox5"></div>
+			<button id="submitPlan" class="Fright" pButton type="button" (click)="submitPlan()" icon="fa-check" label="{{selectedAction}}"></button>
 		</div>
 	</div>
-	<div class="row marginTop10">
-		<div class="col-xs-10">
-			<textarea rows="5" class="form-control" [(ngModel)]="comment" placeholder="Comment"></textarea>
-		</div>
-	</div>
-	<div class="row marginTop10" style="text-align: right;">
-		<div class="col-xs-12">
-			<button id="submitPlan" style="width: 50%; max-width: 200px" pButton type="button" (click)="submitPlan()" icon="fa-check" label="{{selectedAction}}"></button>
-		</div>
-	</div>
-	<br/>
-	<br/>
+</div>
+<div class="EmptyBox10"></div>

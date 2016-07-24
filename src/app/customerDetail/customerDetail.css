@@ -1,16 +1,17 @@
-hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  .badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
 }
-.Bold {
-  font-weight: bold;
-}
-.Red {
-  color: red;
-}
-.Green {
-  color: green;
-}
+
 .revenue {
   color: gray;
   float: right;
@@ -30,12 +31,7 @@ hr {
   padding-top: 15px;
   display: inline-block;
 }
-.FRight {
-  float: right;
-}
-.FLeft {
-  float: left;
-}
+
 .Center {
   text-align: center;
  display: block;

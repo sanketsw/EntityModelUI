@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../model/customer';
+import { User } from '../model/user';
 
 
 @Component({
@@ -28,13 +29,25 @@ export class CustomersComponent implements OnInit {
 
 
   ngOnInit() {
-    this.customerService.getCustomers().then(customers => this.customers = customers);
+    let user: User = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.customerService.getCustomers().then(customers => {
+      if (user.role === 'Pricer') {
+        let filterList: Customer[] = [];
+        for (let c of customers) {
+          if (c.actionOwner === 'Pricer') {
+            filterList.push(c);
+          }
+        }
+        customers = filterList;
+      }
+      this.customers = customers;
+    });
   }
 
   viewCustomer(customer: Customer) {
-      this.selectedCustomer = customer;
-      sessionStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
-      this.router.navigate(['/customerDetail']);
+    this.selectedCustomer = customer;
+    sessionStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
+    this.router.navigate(['/customerDetail']);
   }
 
 

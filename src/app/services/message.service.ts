@@ -17,8 +17,8 @@ export class MessageService {
     }
   }
 
-  getMessage(customerName: string) {
-    this.getMessages().then(messages => {
+  getMessagesForCustomer(customerName: string) {
+    return this.getMessages().then(messages => {
       let messageList: Message[] = [];
       for (let c of messages) {
         if (c.customer === customerName) {

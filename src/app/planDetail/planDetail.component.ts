@@ -9,6 +9,7 @@ import { CustomerService } from '../services/customer.service';
 import { ActionService } from '../services/action.service';
 import { Product } from '../model/product';
 import { Message } from '../model/message';
+import { User } from '../model/user';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { Message } from '../model/message';
     'app/planDetail/planDetail.css'
   ],
   directives: [Button, InputTextarea, Password, Panel, Dropdown],
-  providers: [ProductService, ActionService, CustomerService]
+  providers: [ProductService, ActionService, CustomerService, MessageService]
 })
 
 export class PlanDetailComponent implements OnInit {
@@ -35,6 +36,12 @@ export class PlanDetailComponent implements OnInit {
 
   comment: string;
 
+  user: User;
+
+  acceptedAndCustomer() {
+    return this.user.role === 'Customer' && this.customer.status === 'Accepted';
+  }
+
   constructor(private router: Router,
     private productService: ProductService,
     private actionService: ActionService,
@@ -45,11 +52,11 @@ export class PlanDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.customer = JSON.parse(localStorage.getItem('customer'));
-    this.customer.difference = -1467;
+    this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.productService.getProductsInCurrentPlan().then(products => this.products = products);
     this.productService.getProductsInNewPlan().then(newProducts => this.newProducts = newProducts);
-    this.actionService.getActions('Exec').then(actions => {
+    this.actionService.getActions(this.user.role).then(actions => {
       this.actions = actions;
       this.selectedAction = actions[0].value;
     });
@@ -63,21 +70,31 @@ export class PlanDetailComponent implements OnInit {
     let myMessage: Message = {
       description: this.comment,
       event: this.selectedAction,
-      user: 'Sanket',
-      role: 'Exec',
+      user: this.user.name,
+      role: this.user.role,
       customer: this.customer.name
     };
     this.messageService.updateMessage(myMessage);
 
+    // TODO Time
     // TODO Send SMS to customer / pricer
 
     // Set customer status as proposed
     this.customer.status = 'Proposed';
+    if (this.selectedAction === 'Submit to Pricer') {
+      this.customer.actionOwner = 'Pricer';
+    } else if (this.selectedAction === 'Submit to Customer') {
+      this.customer.actionOwner = 'Customer';
+    } else if (this.selectedAction === 'Accept') {
+      this.customer.actionOwner = null;
+      this.customer.status = 'Accepted';
+    } else {
+      this.customer.actionOwner = 'Exec';
+    }
     this.customerService.updateCustomer(this.customer);
 
-    localStorage.setItem('customer', JSON.stringify(this.customer));
+    sessionStorage.setItem('customer', JSON.stringify(this.customer));
     this.router.navigate(['/customerDetail']);
   }
-
 
 }

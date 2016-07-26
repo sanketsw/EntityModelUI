@@ -14,7 +14,7 @@ var gzip = require('gulp-gzip');
 require('@ngstarter/systemjs-extension')(config);
 
 gulp.task('build', function(done) {
-  runSequence('test', 'build-systemjs', 'build-assets', 'build-zip', done);
+  runSequence('test', 'build-systemjs', 'build-assets', 'build-copy', done);
 });
 
 
@@ -89,13 +89,14 @@ function excludeFolder(folderName) {
 }
 
 
-gulp.task('build-zip', () => {
+gulp.task('build-copy', () => {
   var srcArray = ['./**/*']
-    .concat(excludeFolder('node_modules'))
-    .concat(excludeFolder('typings'))
-    .concat(excludeFolder('dist'))
-    .concat(excludeFolder('report'));
+    .concat(excludeFolder('./config'))
+    .concat(excludeFolder('./src'))
+    .concat(excludeFolder('./node_modules'))
+    .concat(excludeFolder('./typings'))
+    .concat(excludeFolder('./dist'))
+    .concat(excludeFolder('./report'));
   return gulp.src(srcArray)
-    .pipe(zip(pkg.name + '-' + pkg.version + '.zip'))
     .pipe(gulp.dest('dist'));
 });

@@ -10,9 +10,10 @@ export class CustomerService {
     console.log('customers');
     console.log(customers);
     if (customers === null || customers.length < 1) {
+      console.log('Get from mock customers array');
       customers = CUSTOMERS;
+      localStorage.setItem('customers', JSON.stringify(CUSTOMERS));
     }
-    localStorage.setItem('customers', JSON.stringify(CUSTOMERS));
     return Promise.resolve(customers);
   }
 
@@ -28,6 +29,7 @@ export class CustomerService {
   }
 
   updateCustomer(customer: Customer) {
+    console.log('updateCustomer');
     this.getCustomers().then(customers => {
       console.log('customers');
       console.log(customers);

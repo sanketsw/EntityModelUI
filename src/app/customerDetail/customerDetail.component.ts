@@ -72,7 +72,7 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   displayPlanButton() {
-    if (this.user.role === 'Customer' && this.customer.status == null) {
+    if (this.user.role === 'Customer' && this.customer.status === null) {
       return false;
     }
     return true;

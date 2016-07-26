@@ -34,6 +34,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   logout() {
+    sessionStorage.clear();
     sessionStorage.setItem('loggedIn', 'false');
     console.log('user logged out ');
     this.router.navigate(['/']);

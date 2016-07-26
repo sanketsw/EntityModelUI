@@ -5,6 +5,6 @@ export interface Customer {
     expiry: number;
     difference: number;
     newPlanDifference: number;
-    status?: string;
-    actionOwner ?: string;
+    status : string;
+    actionOwner : string;
 }

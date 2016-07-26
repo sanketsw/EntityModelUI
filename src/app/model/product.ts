@@ -9,3 +9,10 @@ export interface Product {
   originalPrice?: number;
   defaultPrice?: number;
 }
+
+
+export class CustomerProductMap {
+  customer: string;
+  products: Product[];
+  selectedPromotions: number[];
+}

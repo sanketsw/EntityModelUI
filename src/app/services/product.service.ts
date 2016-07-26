@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PRODUCTS, CUST_PROD_MAP, NEW_CUST_PROD_MAP, CustomerProductMap } from './mock-products';
-import { Product } from '../model/product';
+import { PRODUCTS, CUST_PROD_MAP, NEW_CUST_PROD_MAP } from './mock-products';
+import { Product, CustomerProductMap } from '../model/product';
 
 // Don't forget the parentheses! Neglecting them leads to an error that's difficult to diagnose.
 @Injectable()
@@ -52,7 +52,7 @@ export class ProductService {
     return this.getCUST_PROD_MAP().then(map => {
       for (let e of map) {
         if (e.customer === customerName) {
-          return Promise.resolve(e.products);
+          return Promise.resolve(e);
         }
       }
     });
@@ -62,27 +62,33 @@ export class ProductService {
     return this.getNEW_CUST_PROD_MAP().then(map => {
       for (let e of map) {
         if (e.customer === customerName) {
-          return Promise.resolve(e.products);
+          return Promise.resolve(e);
         }
       }
       return this.getProductsInCurrentPlan(customerName);
     });
   }
 
-  getSubscriptionSummary(products: Product[]) {
-    let initialPrice = 0, currentPrice = 0;
-    for (let p of products) {
+  getSubscriptionSummary(map: CustomerProductMap) {
+    let initialPrice = 0, currentPrice = 0, totalDiscount = 0;
+    if (map.selectedPromotions !== null) {
+      for (let n of map.selectedPromotions) {
+        totalDiscount += n;
+      }
+    }
+    for (let p of map.products) {
       initialPrice += p.originalPrice * p.count;
       currentPrice += p.price * p.count;
     }
+    currentPrice = currentPrice - ((currentPrice * totalDiscount) / 100);
     let ret: SubscriptionSummary = { initialPrice: initialPrice, currentPrice: currentPrice, difference: (currentPrice - initialPrice) };
     return Promise.resolve(ret);
   }
 
 
-  updateProducts(customerName: string, products: Product[]) {
+  updateProducts(customerName: string, products: Product[], selectedPromotions: number[]) {
     return this.getNEW_CUST_PROD_MAP().then(map => {
-      let newEntry: CustomerProductMap = { customer: customerName, products: products };
+      let newEntry: CustomerProductMap = { customer: customerName, products: products, selectedPromotions: selectedPromotions };
       let finalMap: CustomerProductMap[] = [];
       let found = false;
       for (let e of map) {

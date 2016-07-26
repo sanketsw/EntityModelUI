@@ -60,15 +60,15 @@ export class PlanDetailComponent implements OnInit {
 
     this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
-    this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
-      this.products = products;
-      this.productService.getSubscriptionSummary(products).then(summary => {
+    this.productService.getProductsInCurrentPlan(this.customer.name).then(productsMap => {
+      this.products = productsMap.products;
+      this.productService.getSubscriptionSummary(productsMap).then(summary => {
         this.customer.revenue = summary.initialPrice;
         this.customer.difference = summary.difference;
-        this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
-          this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+        this.productService.getProductsInNewPlan(this.customer.name).then(newProductsMap => {
+          this.productService.getSubscriptionSummary(newProductsMap).then(newsummary =>
             this.customer.newPlanDifference = newsummary.currentPrice - this.customer.revenue);
-          this.newProducts = newProducts;
+          this.newProducts = newProductsMap.products;
         });
       });
     });

@@ -1,9 +1,5 @@
-import { Product } from '../model/product';
+import { Product, CustomerProductMap } from '../model/product';
 
-export class CustomerProductMap {
-  customer: string;
-  products: Product[];
-}
 
 export const CUST_PROD_MAP: CustomerProductMap[] = [
   {
@@ -18,7 +14,8 @@ export const CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 5, status: 'new' },
       { id: '58', count: 10, status: 'new' },
       { id: '59', count: 2, status: 'new' }
-    ]
+    ],
+    selectedPromotions: null
   }, {
     customer: 'Narco Stores',
     products: [
@@ -31,7 +28,8 @@ export const CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 35, status: 'new' },
       { id: '58', count: 0, status: 'new' },
       { id: '59', count: 0, status: 'new' }
-    ]
+    ],
+    selectedPromotions: null
   }, {
     customer: 'Bombasto Traders',
     products: [
@@ -44,7 +42,8 @@ export const CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 15, status: 'new' },
       { id: '58', count: 10, status: 'new' },
       { id: '59', count: 22, status: 'new' }
-    ]
+    ],
+    selectedPromotions: null
   }, {
     customer: 'Rhumbas',
     products: [
@@ -57,7 +56,8 @@ export const CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 17, status: 'new' },
       { id: '58', count: 19, status: 'new' },
       { id: '59', count: 2, status: 'new' }
-    ]
+    ],
+    selectedPromotions: null
   }
 ];
 
@@ -74,7 +74,8 @@ export const NEW_CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 20, status: 'new' },
       { id: '58', count: 15, status: 'new' },
       { id: '59', count: 3, status: 'new' }
-    ]
+    ],
+    selectedPromotions: null
   }, {
     customer: 'Bombasto Traders',
     products: [
@@ -87,7 +88,8 @@ export const NEW_CUST_PROD_MAP: CustomerProductMap[] = [
       { id: '57', count: 0, status: 'new' },
       { id: '58', count: 25, status: 'new' },
       { id: '59', count: 32, status: 'new' }
-    ]
+    ],
+    selectedPromotions: [2]
   }
 ];
 

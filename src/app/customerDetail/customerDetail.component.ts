@@ -87,16 +87,16 @@ export class CustomerDetailComponent implements OnInit {
     if (!this.customer.status) {
       this.customer.actionOwner = 'Exec';
     }
-    this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
-      this.productService.getSubscriptionSummary(products).then(summary => {
+    this.productService.getProductsInCurrentPlan(this.customer.name).then(productsMap => {
+      this.productService.getSubscriptionSummary(productsMap).then(summary => {
         this.customer.revenue = summary.initialPrice;
         this.customer.difference = summary.difference;
-        this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
-          this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+        this.productService.getProductsInNewPlan(this.customer.name).then(newProductsMap => {
+          this.productService.getSubscriptionSummary(newProductsMap).then(newsummary =>
             this.customer.newPlanDifference = newsummary.currentPrice - this.customer.revenue);
         });
       });
-      this.products = products;
+      this.products = productsMap.products;
     });
     this.messages = [];
     this.messageService.getMessagesForCustomer(this.customer.name).then(messages => {

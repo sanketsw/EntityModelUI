@@ -95,12 +95,15 @@ export class ProductPlannerComponent implements OnInit {
   ngOnInit() {
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.categoryService.getCategories().then(categories => this.categories = categories);
-    this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
-      this.productService.getSubscriptionSummary(newProducts).then(newsummary => this.customer.newPlanDifference = newsummary.difference);
-      this.products = newProducts;
 
-      this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
-        this.productService.getSubscriptionSummary(products).then(summary => {
+    this.productService.getProductsInNewPlan(this.customer.name).then(newProductsMap => {
+      this.productService.getSubscriptionSummary(newProductsMap).then(
+        newsummary => this.customer.newPlanDifference = newsummary.difference);
+      this.products = newProductsMap.products;
+      this.selectedPromotions = newProductsMap.selectedPromotions;
+
+      this.productService.getProductsInCurrentPlan(this.customer.name).then(productsMap => {
+        this.productService.getSubscriptionSummary(productsMap).then(summary => {
           this.customer.revenue = summary.initialPrice;
           this.customer.difference = summary.difference;
           this.initialPrice = this.customer.revenue;
@@ -132,7 +135,7 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   reviewPlan() {
-    this.productService.updateProducts(this.customer.name, this.products);
+    this.productService.updateProducts(this.customer.name, this.products, this.selectedPromotions);
     this.router.navigate(['/planDetail']);
   }
 

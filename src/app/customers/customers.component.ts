@@ -52,12 +52,12 @@ export class CustomersComponent implements OnInit {
       this.customers = customers;
       if (this.customers) {
         for (let c of this.customers) {
-          this.productService.getProductsInCurrentPlan(c.name).then(products => {
-            this.productService.getSubscriptionSummary(products).then(summary => {
+          this.productService.getProductsInCurrentPlan(c.name).then(productsMap => {
+            this.productService.getSubscriptionSummary(productsMap).then(summary => {
               c.revenue = summary.initialPrice;
               c.difference = summary.difference;
-              this.productService.getProductsInNewPlan(c.name).then(newProducts => {
-                this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+              this.productService.getProductsInNewPlan(c.name).then(newProductsMap => {
+                this.productService.getSubscriptionSummary(newProductsMap).then(newsummary =>
                   c.newPlanDifference = newsummary.currentPrice - c.revenue);
               });
             });

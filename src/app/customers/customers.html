@@ -14,8 +14,8 @@
 			<span class="Fright">{{customer.status}}</span>
 		</div>
 		<div class="Container60">
-			<span [class.Orange]="customer.expiry < 60" class="FontRobotoLight Fs18">Expires in <span class="FontBold">{{customer.expiry}}</span> days</span>
-			<br/> 	<span class="FontRobotoLight Fs18">$ {{customer.revenue}} revenue</span>
+			<span [class.Orange]="customer.expiry < 90" class="FontRobotoLight Fs18">Expires in <span class="FontBold">{{customer.expiry}}</span> days</span>
+			<br/> 	<span class="FontRobotoLight Fs18">{{customer.revenue | currency:'USD':true:'1.0-0'}} revenue</span>
 		</div>
 		<div class="Container40">
 			<div class="EmptyBox5"></div>

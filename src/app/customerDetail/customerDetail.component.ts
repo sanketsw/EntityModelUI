@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Button, InputText, Password, Panel, DataList} from 'primeng/primeng';
+import {Button, InputText, Password, Panel, OverlayPanel} from 'primeng/primeng';
 import {Router} from '@angular/router';
 
 import { Customer } from '../model/customer';
@@ -16,7 +16,7 @@ import { User } from '../model/user';
   styleUrls: [
     'app/customerDetail/customerDetail.css'
   ],
-  directives: [Button, InputText, Password, Panel, DataList],
+  directives: [Button, InputText, Password, Panel, OverlayPanel],
   providers: [ProductService, MessageService]
 })
 
@@ -81,13 +81,22 @@ export class CustomerDetailComponent implements OnInit {
 
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
     if (!this.customer.status) {
       this.customer.actionOwner = 'Exec';
     }
-    this.productService.getProductsInCurrentPlan().then(products => {
-      this.products = products.filter(product => product.count > 0);
+    this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
+      this.productService.getSubscriptionSummary(products).then(summary => {
+        this.customer.revenue = summary.initialPrice;
+        this.customer.difference = summary.difference;
+        this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
+          this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+            this.customer.newPlanDifference = newsummary.currentPrice - this.customer.revenue);
+        });
+      });
+      this.products = products;
     });
     this.messages = [];
     this.messageService.getMessagesForCustomer(this.customer.name).then(messages => {

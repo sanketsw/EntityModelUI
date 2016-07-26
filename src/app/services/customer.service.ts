@@ -9,12 +9,11 @@ export class CustomerService {
     let customers: Customer[] = JSON.parse(localStorage.getItem('customers'));
     console.log('customers');
     console.log(customers);
-    if (customers != null && customers.length > 0) {
-      return Promise.resolve(customers);
-    } else {
-      localStorage.setItem('customers', JSON.stringify(CUSTOMERS));
-      return Promise.resolve(CUSTOMERS);
+    if (customers === null || customers.length < 1) {
+      customers = CUSTOMERS;
     }
+    localStorage.setItem('customers', JSON.stringify(CUSTOMERS));
+    return Promise.resolve(customers);
   }
 
   getCustomer(name: string) {

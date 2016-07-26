@@ -120,9 +120,9 @@ hr {
 	border-style:solid;
 	border-color:#888888;
 	border-radius:0px 6px 6px 0px;
-	background-color:#44bb44;
+	/* background-color:#44bb44; */
 	font-weight:bold;
-	color:white;
+	/* color:white; */
 	cursor:pointer;
 	margin:0px;
 }
@@ -138,9 +138,9 @@ hr {
 	border-style:solid;
 	border-color:#888888;
 	border-radius:6px 0px 0px 6px;
-	background-color:#cc4444;
+	/* background-color:#cc4444; */
 	font-weight:bold;
-	color:white;
+	/* color:white; */
 	cursor:pointer;
 	margin:0px;
 }

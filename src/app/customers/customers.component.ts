@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import { CustomerService } from '../services/customer.service';
 import { Customer } from '../model/customer';
 import { User } from '../model/user';
+import { ProductService } from '../services/product.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { User } from '../model/user';
     'app/customers/customers.css'
   ],
   directives: [Button, InputText, Password, Panel, DataList],
-  providers: [CustomerService]
+  providers: [CustomerService, ProductService]
 })
 
 export class CustomersComponent implements OnInit {
@@ -26,12 +27,12 @@ export class CustomersComponent implements OnInit {
   user: User;
 
   needsAction(customer: Customer) {
-    if (customer.actionOwner === this.user.role || !customer.status ) {
+    if (customer.actionOwner === this.user.role || !customer.status) {
       return true;
     }
   }
 
-  constructor(private router: Router, private customerService: CustomerService) {
+  constructor(private router: Router, private customerService: CustomerService, private productService: ProductService) {
     // sessionStorage.setItem('loggedIn', 'false');
   }
 
@@ -49,6 +50,20 @@ export class CustomersComponent implements OnInit {
         customers = filterList;
       }
       this.customers = customers;
+      if (this.customers) {
+        for (let c of this.customers) {
+          this.productService.getProductsInCurrentPlan(c.name).then(products => {
+            this.productService.getSubscriptionSummary(products).then(summary => {
+              c.revenue = summary.initialPrice;
+              c.difference = summary.difference;
+              this.productService.getProductsInNewPlan(c.name).then(newProducts => {
+                this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+                  c.newPlanDifference = newsummary.currentPrice - c.revenue);
+              });
+            });
+          });
+        }
+      }
     });
   }
 

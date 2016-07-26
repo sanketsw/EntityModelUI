@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Button, InputText, Password, Panel, DataList } from 'primeng/primeng';
+import { SelectItem, MultiSelect, Button, InputText, Password, Panel, Slider, Growl, Message } from 'primeng/primeng';
 import { Router } from '@angular/router';
 import { Accordion } from 'primeng/primeng';
 import { AccordionTab } from 'primeng/primeng';
@@ -15,7 +15,7 @@ import { Customer } from '../model/customer';
   styleUrls: [
     'app/product-planner/product-planner.css'
   ],
-  directives: [Button, InputText, Password, Panel, DataList, Accordion, AccordionTab],
+  directives: [MultiSelect, Button, InputText, Password, Panel, Slider, Accordion, AccordionTab, Growl],
   providers: [ProductService, CategoryService]
 })
 
@@ -28,37 +28,87 @@ export class ProductPlannerComponent implements OnInit {
   selectedCategory: Category;
   plannedPrice: number;
   initialPrice: number;
+  promotions: SelectItem[];
+  selectedPromotions: SelectItem[];
+  msgs: Message[] = [];
+
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
+    this.promotions = [];
+    this.promotions.push({ label: 'VIP customer 5%', value: 5 });
+    this.promotions.push({ label: 'Winter special 3%', value: 3 });
+    this.promotions.push({ label: 'Long time customer 2%', value: 2 });
+
+  }
+
+  show() {
+    this.msgs = [];
+    this.msgs.push({
+      severity: 'info',
+      summary: 'Difference: ' + Math.floor(this.plannedPrice - this.initialPrice),
+      detail: 'Revenue: $ ' + Math.round(this.plannedPrice)
+    });
   }
 
   recalculate() {
     this.calculate(this.products);
+    this.show();
   }
 
   calculate(products) {
+    let percentageSum = 0;
+    if (this.selectedPromotions != null) {
+      for (let currentPromotion of this.selectedPromotions) {
+        percentageSum += currentPromotion.value;
+      }
+    }
+
     this.plannedPrice = 0;
     for (let currentProduct of products) {
       this.plannedPrice += (currentProduct.price * currentProduct.count);
     }
+    this.plannedPrice = this.plannedPrice - ((this.plannedPrice / 100) * percentageSum);
     this.customer.newPlanDifference = this.plannedPrice - this.initialPrice;
   }
 
   calculateInitialPrice(products) {
     this.initialPrice = 0;
     for (let currentProduct of products) {
-      this.initialPrice += (currentProduct.price * currentProduct.count);
+      this.initialPrice += (currentProduct.originalPrice * currentProduct.count);
+    }
+  }
+
+  getMinValue(product: Product) {
+    return product.defaultPrice - (product.defaultPrice * 5 / 100);
+  }
+
+  getMaxValue(product: Product) {
+    return product.defaultPrice + (product.defaultPrice * 5 / 100);
+  }
+
+  getBackground(product: Product) {
+    if (product.count > 0) {
+      return 'LeadenGreenBack White';
     }
   }
 
   ngOnInit() {
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
     this.categoryService.getCategories().then(categories => this.categories = categories);
-    this.productService.getProductsInCurrentPlan().then(products => {
-      this.products = products;
-      this.calculate(products);
-      this.calculateInitialPrice(products);
+    this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
+      this.productService.getSubscriptionSummary(newProducts).then(newsummary => this.customer.newPlanDifference = newsummary.difference);
+      this.products = newProducts;
+
+      this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
+        this.productService.getSubscriptionSummary(products).then(summary => {
+          this.customer.revenue = summary.initialPrice;
+          this.customer.difference = summary.difference;
+          this.initialPrice = this.customer.revenue;
+          this.calculate(this.products);
+        });
+      });
+      // this.calculateInitialPrice(products);
     });
   }
 
@@ -83,10 +133,15 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   reviewPlan() {
+    this.productService.updateProducts(this.customer.name, this.products);
     this.router.navigate(['/planDetail']);
   }
 
   back() {
-    this.router.navigate(['/customerDetail']);
+    if (this.customer.status) {
+      this.router.navigate(['/planDetail']);
+    } else {
+      this.router.navigate(['/customerDetail']);
+    }
   }
 }

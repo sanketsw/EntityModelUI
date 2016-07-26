@@ -43,6 +43,10 @@ export class PlanDetailComponent implements OnInit {
     return this.user.role === 'Customer' && this.customer.status === 'Accepted';
   }
 
+  nonCustomer() {
+    return this.user.role !== 'Customer';
+  }
+
   constructor(private router: Router,
     private productService: ProductService,
     private actionService: ActionService,
@@ -56,8 +60,18 @@ export class PlanDetailComponent implements OnInit {
 
     this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
     this.customer = JSON.parse(sessionStorage.getItem('customer'));
-    this.productService.getProductsInCurrentPlan().then(products => this.products = products);
-    this.productService.getProductsInNewPlan().then(newProducts => this.newProducts = newProducts);
+    this.productService.getProductsInCurrentPlan(this.customer.name).then(products => {
+      this.products = products;
+      this.productService.getSubscriptionSummary(products).then(summary => {
+        this.customer.revenue = summary.initialPrice;
+        this.customer.difference = summary.difference;
+        this.productService.getProductsInNewPlan(this.customer.name).then(newProducts => {
+          this.productService.getSubscriptionSummary(newProducts).then(newsummary =>
+            this.customer.newPlanDifference = newsummary.currentPrice - this.customer.revenue);
+          this.newProducts = newProducts;
+        });
+      });
+    });
     this.actionService.getActions(this.user.role).then(actions => {
       this.actions = actions;
       this.selectedAction = actions[0].value;

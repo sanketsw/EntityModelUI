@@ -29,7 +29,7 @@ export class ProductPlannerComponent implements OnInit {
   plannedPrice: number;
   initialPrice: number;
   promotions: SelectItem[];
-  selectedPromotions: string;
+  selectedPromotions: number[];
   msgs: Message[] = [];
 
 

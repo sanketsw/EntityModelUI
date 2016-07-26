@@ -29,17 +29,16 @@ export class ProductPlannerComponent implements OnInit {
   plannedPrice: number;
   initialPrice: number;
   promotions: SelectItem[];
-  selectedPromotions: SelectItem[];
+  selectedPromotions: string;
   msgs: Message[] = [];
 
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
     this.promotions = [];
-    this.promotions.push({ label: 'VIP customer 5%', value: 5 });
+    this.promotions.push({ label: 'VIP customer Rebate', value: 5 });
     this.promotions.push({ label: 'Winter special 3%', value: 3 });
-    this.promotions.push({ label: 'Long time customer 2%', value: 2 });
-
+    this.promotions.push({ label: 'Loyalty Fund Rebate', value: 2 });
   }
 
   show() {
@@ -60,7 +59,7 @@ export class ProductPlannerComponent implements OnInit {
     let percentageSum = 0;
     if (this.selectedPromotions != null) {
       for (let currentPromotion of this.selectedPromotions) {
-        percentageSum += currentPromotion.value;
+        percentageSum += currentPromotion;
       }
     }
 

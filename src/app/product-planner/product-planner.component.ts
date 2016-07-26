@@ -36,8 +36,8 @@ export class ProductPlannerComponent implements OnInit {
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
     // sessionStorage.setItem('loggedIn', 'false');
     this.promotions = [];
-    this.promotions.push({ label: 'VIP customer Rebate', value: 5 });
-    this.promotions.push({ label: 'Winter special 3%', value: 3 });
+    this.promotions.push({ label: 'Growth Fund', value: 5 });
+    this.promotions.push({ label: 'Quarter 2 cloud incentive', value: 3 });
     this.promotions.push({ label: 'Loyalty Fund Rebate', value: 2 });
   }
 
@@ -45,7 +45,7 @@ export class ProductPlannerComponent implements OnInit {
     this.msgs = [];
     this.msgs.push({
       severity: 'info',
-      summary: 'Difference: ' + Math.floor(this.plannedPrice - this.initialPrice),
+      summary: 'Impact: ' + Math.floor(this.plannedPrice - this.initialPrice),
       detail: 'Revenue: $ ' + Math.round(this.plannedPrice)
     });
   }

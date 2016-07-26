@@ -105,7 +105,7 @@ export class PlanDetailComponent implements OnInit {
 
     // Set customer status as proposed
     this.customer.status = 'Proposed';
-    if (this.selectedAction === 'Submit to Pricer') {
+    if (this.selectedAction === 'Escalate to Pricer') {
       this.customer.actionOwner = 'Pricer';
     } else if (this.selectedAction === 'Submit to Customer') {
       this.customer.actionOwner = 'Customer';

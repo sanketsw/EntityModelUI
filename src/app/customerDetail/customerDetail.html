@@ -16,7 +16,7 @@
 	<div *ngIf="nonCustomer()">
 		<div class="Container50">
 			<div class="EmptyBox10"></div>
-			<div class="FontRobotoRegular Fs18">Projected difference on renewal: </div>
+			<div class="FontRobotoRegular Fs18">Expected impact of renewal: </div>
 		</div>
 		<div class="Container50 FontRobotoRegular">
 			<div class="EmptyBox10"></div>
@@ -26,23 +26,22 @@
 <div class="EmptyBox10"></div>
 
 <div class="Card ShadowEffect White " [class.OrangeBack]="needsAction()" [class.GreenBack]="! needsAction()">
-	<h2 class="CardTopic Fs22 White BorderBottom" style="font-weight:bold;">{{(customer.status ? customer.status : 'Proposed')}} plan
+	<h2 class="CardTopic Fs22 White BorderBottom" style="font-weight:bold;">{{(customer.status ? customer.status : 'Proposed')}} Solution
 		<span *ngIf="needsAction()" class="Fright badge RedBack Fs18 FontRobotoLight" style="font-weight:normal;" (click)="newPlan()">Needs your action</span>
 		<span *ngIf="!needsAction(customer)" class="Fright badge BoldGrayBack Fs18 FontRobotoLight" style="font-weight:normal;">No action for you</span></h2>
 	<div class="EmptyBox5"></div>
-	<div *ngIf="customer.status == null" class="Container100 FontRobotoLight">No plan has been proposed yet.</div>
+	<div *ngIf="customer.status == null" class="Container100 FontRobotoLight">New solution has not been proposed yet.</div>
 	<div *ngIf="customer.status">
 		<div class="Container50">
 			<div class="EmptyBox10"></div>
-			<div class="FontRobotoRegular Fs18">{{ (user.role === 'Customer' ? 'Proposed difference':'Projected revenue difference:')}} </div>
+			<div class="FontRobotoRegular Fs18">Impact of new solution: </div>
 		</div>
 		<div class="Container50 FontRobotoRegular Red">
-			<div class="EmptyBox10"></div>
 			<span [class.White]="(customer.newPlanDifference > -1)" class="Fs50 FontRobotoLight Fright">{{ (customer.newPlanDifference
 	<0? '': '+') + (customer.newPlanDifference  | currency:'USD':true:'1.0-0') }}</span>
 		</div>
 		<div class="EmptyBox5"></div>
-		<div *ngIf="! nonCustomer()" class=" FontRobotoRegular">Total
+		<div *ngIf="! nonCustomer()" class=" FontRobotoRegular Fs18">Total Cost:
 			<h2 class="CardTopic Fright" style="font-weight: bold;">{{(customer.revenue + customer.newPlanDifference)  | currency:'USD':true:'1.0-0'}}</h2>
 		</div>
 	</div>

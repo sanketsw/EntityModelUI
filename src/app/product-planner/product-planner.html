@@ -1,18 +1,18 @@
 <div class="row">
 	<span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
 	<span class="col-xs-12 Center FontBold">{{ (customer.status
-? 'Modify Products in Proposed Plan':'Select Products for New Plan')}} </span>
+? 'Modify Products in Proposed Solution':'Select Products for New Solution')}} </span>
 	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
 <p-growl [value]="msgs"></p-growl>
 
 <div class="Card ShadowEffect">
-	<h2 class="CardTopic BorderBottom" style="font-weight:bold;">Proposed Revenue <span class="Fright FontBold">{{plannedPrice | currency:'USD':true:'1.0-0'}}</span></h2>
+	<h2 class="CardTopic BorderBottom" style="font-weight:bold;">Expected revenue <span class="Fright FontBold">{{plannedPrice | currency:'USD':true:'1.0-0'}}</span></h2>
 	<div>
 		<div class="Container60">
 			<div class="EmptyBox10"></div>
-			<div class="FontRobotoRegular Fs18">Projected difference on renewal: </div>
+			<div class="FontRobotoRegular Fs18">Expected impact on revenue: </div>
 		</div>
 		<div class="Container40 FontRobotoRegular"><div class="EmptyBox10"></div>
 			<span [class.Green]="plannedPrice - initialPrice > -1" [class.Orange]="plannedPrice - initialPrice < 0" class="Fs30 FontRobotoLight FontBold Fright"> {{((plannedPrice - initialPrice)
@@ -20,6 +20,10 @@
 	</div>
 </div>
 <div class="EmptyBox10"></div>
+
+
+<div class="Fs14 LeadenGreen">Select count and adjust product pricing within your delegation to work out an optimum solution.</div>
+<div class="EmptyBox5"></div>
 
 <p-accordion>
 	<p-accordionTab *ngFor="let category of categories" header="{{category.name}}">

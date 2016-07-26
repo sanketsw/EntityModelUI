@@ -1,7 +1,7 @@
 <div class="row">
 	<span class="Fleft"><a (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a></span>
 	<span class="col-xs-12 Center FontBold">{{ (customer.status
-? 'Modify '+ customer.status + ' Plan':'Review and Submit your New Plan')}} </span>
+? 'Modify '+ customer.status + ' Solution':'Review and Submit your New Soltuion')}} </span>
 	<div class="SeparatorFull" style="border-color: darkgray;"></div>
 </div>
 
@@ -9,14 +9,14 @@
 <div class="Fs50 FontBold BoldGray">{{customer.name}}</div>
 <div class="EmptyBox10"></div>
 <div class="Card ShadowEffect LeadenGreenBack White">
-	<h2 class="CardTopic Fs22 White BorderBottom " style="font-weight:bold;">Proposed plan <span class="FontRobotoLight Fright" [class.Red]="(customer.newPlanDifference < 0)" [class.White]="(customer.newPlanDifference > -1)" >{{ (customer.newPlanDifference
+	<h2 class="CardTopic Fs22 White BorderBottom " style="font-weight:bold;">{{customer.status? customer.status: 'New' }} Solution <span class="FontRobotoLight Fright" [class.Red]="(customer.newPlanDifference < 0)" [class.White]="(customer.newPlanDifference > -1)" >{{ (customer.newPlanDifference
 <0? '': '+') + (customer.newPlanDifference  | currency:'USD':true:'1.0-0') }}</span> </h2>
 	<div class="EmptyBox5"></div>
-	<div class="Container60">
+	<div class="Container50">
 		<div class="EmptyBox10"></div>
-		<div class="FontRobotoLight Fs18">{{ (user.role === 'Customer' ? 'Proposed subscription cost':'Projected revenue for proposed plan:')}} </div>
+		<div class="FontRobotoLight Fs18">{{ (user.role === 'Customer' ? customer.status + ' solution cost':'Expected revenue from the solution:')}} </div>
 	</div>
-	<div class="Container40 FontRobotoLight Fs50">
+	<div class="Container50 FontRobotoLight Fs50">
 			<div class="EmptyBox10"></div>
 		<span class="Fright">{{(customer.revenue  + customer.newPlanDifference) | currency:'USD':true:'1.0-0'}}</span></div>
 	<div class="EmptyBox10"></div>
@@ -24,7 +24,7 @@
 <div class="EmptyBox10"></div>
 
 <div class="Card ShadowEffect">
-	<h2 class="CardTopic Fs22" style="font-weight:bold; padding-bottom: 0px;">Subscription details
+	<h2 class="CardTopic Fs22" style="font-weight:bold; padding-bottom: 0px;">Solution details
 		<button class="Fright RaisedButton" *ngIf="nonCustomer()" id="Plan" pButton type="button" (click)="modify()" icon="fa-pencil"></button>
 		<div class="EmptyBox5"></div></h2>
 	<div *ngFor="let p of newProducts">

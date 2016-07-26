@@ -58,15 +58,15 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   getPlanButtonLabel() {
-    let ret = 'Workout a plan';
+    let ret = 'Workout new solution';
     if (this.user.role === 'Customer') {
       if (this.user.role === this.customer.actionOwner) {
         ret = 'Explore and Take Action';
       } else {
-        ret = 'Explore ' + this.customer.status + ' Plan';
+        ret = 'Explore ' + this.customer.status + ' Solution';
       }
     } else if (this.customer.status) {
-      ret = 'Edit ' + this.customer.status + ' Plan';
+      ret = 'Edit ' + this.customer.status + ' Solution';
     }
     return ret;
   }

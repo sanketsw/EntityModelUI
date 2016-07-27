@@ -3,7 +3,7 @@ Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/prim
 
 
 ## Reference code
-* Please visit [my primeng angular starter used for this project](https://github.com/sanketsw/primeng-aungular-starter) for more details on DevOps, Unit Testing and Integration Testing.
+* Please visit [my primeng angular starter](https://github.com/sanketsw/primeng-aungular-starter) for more details on DevOps, Unit Testing and Integration Testing. It was used for this project as base code.
 * [Modena](http://www.primefaces.org/modena-primeng/) theme for Primeng is integrated in this project while the primeng angular starter uses bootstrap. Purchase it if you want to use this project.
 
 ## Installation

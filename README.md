@@ -1,5 +1,10 @@
 # cheetah
-Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library
+Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library   
+
+
+## Reference code
+* Please visit [my primeng angular starter used for this project](https://github.com/sanketsw/primeng-aungular-starter) for more details on DevOps, Unit Testing and Integration Testing.
+* [Modena](http://www.primefaces.org/modena-primeng/) theme for Primeng is integrated in this project while the primeng angular starter uses bootstrap. Purchase it if you want to use this project.
 
 ## Installation
 Firstly, you need to have [Node.js](https://nodejs.org/en/)
@@ -36,14 +41,20 @@ npm install typings -g
 typing install
 ```
 
-
+## Run in production mode on your local system
+```
+npm install // if you have not run it before
+gulp build
+npm start
+```
+This will enable uglified javascripts, combined css, gzip compression and caching
 
 ## Running-on-IBM-Bluemix
 On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
 
 To push to bluemix execute:   
 ```
-npm install
+npm install // if you have not run it before
 gulp build
 cd dist
 cf push cheetahipoc 
@@ -55,7 +66,5 @@ Bluemix will use nodejs_buildpack and execute `npm install` followed `npm start`
 Hosted: http://cheetahipoc.mybluemix.net/
 
 
-## Special thanks
-* Please visit the [primeng angular starter used for this project](https://github.com/sanketsw/primeng-aungular-starter) for more details on DevOps, Unit Testing and Integratino Testing.
 
 

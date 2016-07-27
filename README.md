@@ -4,7 +4,7 @@ Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/prim
 
 ## Reference code
 * Please visit [my primeng angular starter](https://github.com/sanketsw/primeng-aungular-starter) for more details on DevOps, Unit Testing and Integration Testing. It was used for this project as base code.
-* [Modena](http://www.primefaces.org/modena-primeng/) theme for Primeng is integrated in this project while the primeng angular starter uses bootstrap. Purchase it if you want to use this project.
+* [Modena](http://www.primefaces.org/layouts/modena-primeng) theme for Primeng is integrated in this project while the primeng angular starter uses bootstrap. Purchase it if you want to use this project.
 
 ## Installation
 Firstly, you need to have [Node.js](https://nodejs.org/en/)
@@ -47,10 +47,11 @@ npm install // if you have not run it before
 gulp build
 npm start
 ```
-This will enable uglified javascripts, combined css, gzip compression and caching
+On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
+
+**This will give you much better performance because of uglified javascripts, combined css, gzip compression and caching**
 
 ## Running-on-IBM-Bluemix
-On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
 
 To push to bluemix execute:   
 ```

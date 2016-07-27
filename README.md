@@ -1,18 +1,5 @@
 # cheetah
-Angular2 starter with Continuous Integration, Jenkins DevOps, Automated Test Coverage using Sonarqube and  [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library
-
-
-[![Build Status](https://travis-ci.org/sanketsw/primeng-aungular-starter.svg)](https://travis-ci.org/sanketsw/primeng-aungular-starter)
-[![Build status](https://ci.appveyor.com/api/projects/status/d5b3a9nnxnv5bxa5/branch/master?svg=true)](https://ci.appveyor.com/project/sanketsw/primeng-aungular-starter/branch/master)
-[![Coverage Status](https://coveralls.io/repos/github/sanketsw/primeng-aungular-starter/badge.svg?branch=master)](https://coveralls.io/github/sanketsw/primeng-aungular-starter?branch=master)
-[![Dependency Status](https://david-dm.org/sanketsw/primeng-aungular-starter.svg)](https://david-dm.org/sanketsw/primeng-aungular-starter)
-[![devDependency Status](https://david-dm.org/sanketsw/primeng-aungular-starter/dev-status.svg)](https://david-dm.org/sanketsw/primeng-aungular-starter#info=devDependencies)
-
-
-> Angular 2 is still in **Release Candidate** stage, please **don't** use this in production
-
-> Follow Angular 2 Changelog [here](https://github.com/angular/angular/blob/master/CHANGELOG.md)
-
+Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library
 
 ## Table of Content
 * [Introduction](#introduction)
@@ -155,10 +142,13 @@ Published artifacts: `**/dist/*.zip`
 
 
 ## Running-on-IBM-Bluemix
-On gulp build, artifact produced is `cheetah-1.0.0-rc.4.zip` in the dist folder. This zip file contains source code and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
+On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
 
 To push to bluemix execute:   
-`cf push cheetah -p dist/cheetah-1.0.0-rc.4.zip `
+```
+cd dist
+cf push cheetah 
+```
 
 Bluemix will use nodejs_buildpack and execute `npm install` followed `npm start`
 `npm start` executes server.js and launches the html and css contetns from `build` folder

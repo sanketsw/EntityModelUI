@@ -20,7 +20,10 @@ npm install
 
 ## Start
 Let's start up the server, run:   
-`gulp` or `gulp serve-dev`
+```
+gulp
+```
+or `gulp serve-dev`
 
 and done! The browser will popup and you can start trying Angular 2!
 Every changes to the file will refresh the browser automatically

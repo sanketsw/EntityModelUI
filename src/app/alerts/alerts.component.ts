@@ -7,6 +7,8 @@ import { MessageService } from '../services/message.service';
 import { CustomerService } from '../services/customer.service';
 import { Message } from '../model/message';
 import { User } from '../model/user';
+declare var amplify: any;
+
 
 
 @Component({
@@ -28,7 +30,7 @@ export class AlertsComponent implements OnInit {
 
 
   constructor(private router: Router, private messageService: MessageService, private customerService: CustomerService) {
-    // sessionStorage.setItem('loggedIn', 'false');
+    // amplify.store('loggedIn', 'false');
   }
 
   getMessageColorClass(m: Message) {
@@ -42,8 +44,8 @@ export class AlertsComponent implements OnInit {
 
 
   ngOnInit() {
-    let user: User = JSON.parse(sessionStorage.getItem('loggedUser'));
-    this.customer = JSON.parse(sessionStorage.getItem('customer'));
+    let user: User = JSON.parse(amplify.store('loggedUser'));
+    this.customer = JSON.parse(amplify.store('customer'));
     if (user.role === 'Customer') {
         this.messageService.getMessagesForCustomer(this.customer.name).then(messages => {
           this.messages = messages.reverse();
@@ -63,7 +65,7 @@ export class AlertsComponent implements OnInit {
     console.log(message);
     this.customerService.getCustomer(message.customer).then(customer => {
       console.log(customer);
-      sessionStorage.setItem('customer', JSON.stringify(customer));
+      amplify.store('customer', JSON.stringify(customer));
       this.router.navigate(['/customerDetail']);
     });
   }

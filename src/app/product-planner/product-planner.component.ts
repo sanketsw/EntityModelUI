@@ -8,6 +8,8 @@ import { CategoryService } from '../services/category.service';
 import { Category } from '../model/category';
 import { Product } from '../model/product';
 import { Customer } from '../model/customer';
+declare var amplify: any;
+
 
 @Component({
   selector: 'as-product-planner',
@@ -34,7 +36,7 @@ export class ProductPlannerComponent implements OnInit {
 
 
   constructor(private router: Router, private productService: ProductService, private categoryService: CategoryService) {
-    // sessionStorage.setItem('loggedIn', 'false');
+    // amplify.store('loggedIn', 'false');
     this.promotions = [];
     this.promotions.push({ label: 'Growth Fund', value: 5 });
     this.promotions.push({ label: 'Quarter 2 cloud incentive', value: 3 });
@@ -93,7 +95,7 @@ export class ProductPlannerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customer = JSON.parse(sessionStorage.getItem('customer'));
+    this.customer = JSON.parse(amplify.store('customer'));
     this.categoryService.getCategories().then(categories => this.categories = categories);
 
     this.productService.getProductsInNewPlan(this.customer.name).then(newProductsMap => {

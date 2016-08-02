@@ -2,6 +2,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Router} from '@angular/router';
+declare var amplify: any;
 
 
 @Component({
@@ -17,7 +18,7 @@ export class NavbarComponent {
   }
 
   logout() {
-    sessionStorage.setItem('loggedIn', 'false');
+    amplify.store('loggedIn', 'false');
     console.log('user logged out ');
     this.router.navigate(['/']);
   }

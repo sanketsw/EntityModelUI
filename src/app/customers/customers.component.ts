@@ -6,6 +6,8 @@ import { CustomerService } from '../services/customer.service';
 import { Customer } from '../model/customer';
 import { User } from '../model/user';
 import { ProductService } from '../services/product.service';
+declare var amplify: any;
+
 
 
 @Component({
@@ -33,12 +35,12 @@ export class CustomersComponent implements OnInit {
   }
 
   constructor(private router: Router, private customerService: CustomerService, private productService: ProductService) {
-    // sessionStorage.setItem('loggedIn', 'false');
+    // amplify.store('loggedIn', 'false');
   }
 
 
   ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.user = JSON.parse(amplify.store('loggedUser'));
     this.customerService.getCustomers().then(customers => {
       if (this.user.role === 'Pricer') {
         let filterList: Customer[] = [];
@@ -64,12 +66,13 @@ export class CustomersComponent implements OnInit {
           });
         }
       }
+      console.log('Loading customers');
     });
   }
 
   viewCustomer(customer: Customer) {
     this.selectedCustomer = customer;
-    sessionStorage.setItem('customer', JSON.stringify(this.selectedCustomer));
+    amplify.store('customer', JSON.stringify(this.selectedCustomer));
     this.router.navigate(['/customerDetail']);
   }
 

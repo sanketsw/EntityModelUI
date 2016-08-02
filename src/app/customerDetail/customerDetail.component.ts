@@ -8,6 +8,8 @@ import { Product } from '../model/product';
 import { MessageService } from '../services/message.service';
 import { Message } from '../model/message';
 import { User } from '../model/user';
+declare var amplify: any;
+
 
 
 @Component({
@@ -31,7 +33,7 @@ export class CustomerDetailComponent implements OnInit {
   user: User;
 
   constructor(private router: Router, private productService: ProductService, private messageService: MessageService) {
-    // sessionStorage.setItem('loggedIn', 'false');
+    // amplify.store('loggedIn', 'false');
   }
 
   getMessageColorClass(m: Message) {
@@ -82,8 +84,8 @@ export class CustomerDetailComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
-    this.customer = JSON.parse(sessionStorage.getItem('customer'));
+    this.user = JSON.parse(amplify.store('loggedUser'));
+    this.customer = JSON.parse(amplify.store('customer'));
     if (!this.customer.status) {
       this.customer.actionOwner = 'Exec';
     }

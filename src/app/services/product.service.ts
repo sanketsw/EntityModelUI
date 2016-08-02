@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { PRODUCTS, CUST_PROD_MAP, NEW_CUST_PROD_MAP } from './mock-products';
 import { Product, CustomerProductMap } from '../model/product';
+declare var amplify: any;
+
 
 // Don't forget the parentheses! Neglecting them leads to an error that's difficult to diagnose.
 @Injectable()
 export class ProductService {
   getCUST_PROD_MAP() {
-    let map: CustomerProductMap[] = JSON.parse(localStorage.getItem('CUST_PROD_MAP'));
+    let storedData = amplify.store('CUST_PROD_MAP');
+    storedData = storedData === undefined ? null : storedData;
+    let map: CustomerProductMap[] = JSON.parse(storedData);
     if (map == null || map.length < 1) {
       map = CUST_PROD_MAP;
       map = this.mergeProducts(map);
     }
-    localStorage.setItem('CUST_PROD_MAP', JSON.stringify(map));
+    amplify.store('CUST_PROD_MAP', JSON.stringify(map));
     return Promise.resolve(map);
   }
 
   getNEW_CUST_PROD_MAP() {
-    let map: CustomerProductMap[] = JSON.parse(localStorage.getItem('NEW_CUST_PROD_MAP'));
+    let storedData = amplify.store('NEW_CUST_PROD_MAP');
+    storedData = storedData === undefined ? null : storedData;
+    let map: CustomerProductMap[] = JSON.parse(storedData);
     if (map == null || map.length < 1) {
       map = NEW_CUST_PROD_MAP;
       map = this.mergeProducts(map);
     }
-    localStorage.setItem('NEW_CUST_PROD_MAP', JSON.stringify(map));
+    amplify.store('NEW_CUST_PROD_MAP', JSON.stringify(map));
     return Promise.resolve(map);
   }
 
@@ -102,8 +108,13 @@ export class ProductService {
       if (found === false) {
         finalMap.push(newEntry);
       }
-      localStorage.setItem('NEW_CUST_PROD_MAP', JSON.stringify(finalMap));
+      amplify.store('NEW_CUST_PROD_MAP', JSON.stringify(finalMap));
     });
+  }
+
+  clear() {
+    amplify.store('NEW_CUST_PROD_MAP', null);
+    amplify.store('CUST_PROD_MAP', null);
   }
 }
 

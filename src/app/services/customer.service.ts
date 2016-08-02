@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { CUSTOMERS } from './mock-customers';
 import { Customer } from '../model/customer';
+declare var amplify: any;
+
+// let amplify = require('amplify-1.1.2');
+// let amplify = require('/assets/amplify-1.1.2/individual/amplify.core.js');
+// require('/assets/amplify-1.1.2/individual/amplify.store.js');
 
 // Don't forget the parentheses! Neglecting them leads to an error that's difficult to diagnose.
 @Injectable()
 export class CustomerService {
   getCustomers() {
-    let customers: Customer[] = JSON.parse(localStorage.getItem('customers'));
+    console.log('customers' + amplify.store('customers'));
+    let customers: Customer[] = JSON.parse(amplify.store('customers') === undefined ? null : amplify.store('customers'));
     console.log('customers');
     console.log(customers);
     if (customers === null || customers.length < 1) {
       console.log('Get from mock customers array');
       customers = CUSTOMERS;
-      localStorage.setItem('customers', JSON.stringify(CUSTOMERS));
+      amplify.store('customers', JSON.stringify(CUSTOMERS));
     }
     return Promise.resolve(customers);
   }
@@ -44,7 +50,11 @@ export class CustomerService {
       }
       console.log('newList');
       console.log(newList);
-      localStorage.setItem('customers', JSON.stringify(newList));
+      amplify.store('customers', JSON.stringify(newList));
     });
+  }
+
+  clear() {
+    amplify.store('customers', null);
   }
 }

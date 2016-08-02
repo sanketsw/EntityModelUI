@@ -2,26 +2,37 @@ import {CONSTANTS} from './shared';
 import {Component, AfterViewInit} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 import {Router} from '@angular/router';
+import { CustomerService } from './services/customer.service';
+import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
+import { MessageService } from './services/message.service';
 // import {NavbarComponent} from './navbar/navbar.component';
 
+
 declare var Modena: any;
+
 
 @Component({
   selector: 'as-main-app',
   templateUrl: 'app/app.html',
-  directives: [/* NavbarComponent, */ ROUTER_DIRECTIVES]
+  directives: [/* NavbarComponent, */ ROUTER_DIRECTIVES],
+  providers: [CustomerService, ProductService, MessageService, UserService]
 })
 export class AppComponent implements AfterViewInit {
 
   public appBrand: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private productService: ProductService,
+    private customerService: CustomerService,
+    private messageService: MessageService,
+    private userService: UserService) {
     this.appBrand = CONSTANTS.MAIN.APP.BRAND;
 
   }
 
   userLoggedIn(): boolean {
-    return sessionStorage.getItem('loggedIn') === 'true';
+    return this.userService.getLoggedUser() != null;
   }
 
   ngAfterViewInit() {
@@ -29,13 +40,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   cleanup() {
-    localStorage.clear();
+    this.productService.clear();
+    this.messageService.clear();
+    this.customerService.clear();
     this.router.navigate(['/']);
   }
 
   logout() {
-    sessionStorage.clear();
-    sessionStorage.setItem('loggedIn', 'false');
+    this.userService.logout();
     console.log('user logged out ');
     this.router.navigate(['/']);
   }

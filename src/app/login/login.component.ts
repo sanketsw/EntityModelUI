@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user';
 import { CustomerService } from '../services/customer.service';
+declare var amplify: any;
+
 
 
 @Component({
@@ -27,15 +29,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (sessionStorage.getItem('loggedIn') === 'true') {
-      this.navigateToLandingPage(JSON.parse(sessionStorage.getItem('loggedUser')));
+    if (this.userService.getLoggedUser() != null) {
+      this.navigateToLandingPage(this.userService.getLoggedUser());
     }
   }
 
   navigateToLandingPage(user: User) {
     if (user.role === 'Customer') {
       this.customerService.getCustomer(user.customer).then(customer => {
-        sessionStorage.setItem('customer', JSON.stringify(customer));
+        amplify.store('customer', JSON.stringify(customer));
         this.router.navigate(['/customerDetail']);
       });
     } else {
@@ -51,8 +53,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.userService.autheticateUser(this.name, this.password).then(
       user => {
-        sessionStorage.setItem('loggedUser', JSON.stringify(user));
-        sessionStorage.setItem('loggedIn', 'true');
         console.log('user logged in ' + this.name);
         this.navigateToLandingPage(user);
       },

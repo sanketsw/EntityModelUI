@@ -10,6 +10,8 @@ import { ActionService } from '../services/action.service';
 import { Product } from '../model/product';
 import { Message } from '../model/message';
 import { User } from '../model/user';
+declare var amplify: any;
+
 
 
 @Component({
@@ -52,14 +54,14 @@ export class PlanDetailComponent implements OnInit {
     private actionService: ActionService,
     private customerService: CustomerService,
     private messageService: MessageService) {
-    // sessionStorage.setItem('loggedIn', 'false');
+    // amplify.store('loggedIn', 'false');
   }
 
 
   ngOnInit() {
 
-    this.user = JSON.parse(sessionStorage.getItem('loggedUser'));
-    this.customer = JSON.parse(sessionStorage.getItem('customer'));
+    this.user = JSON.parse(amplify.store('loggedUser'));
+    this.customer = JSON.parse(amplify.store('customer'));
     this.productService.getProductsInCurrentPlan(this.customer.name).then(productsMap => {
       this.products = productsMap.products;
       this.productService.getSubscriptionSummary(productsMap).then(summary => {
@@ -117,7 +119,7 @@ export class PlanDetailComponent implements OnInit {
     }
     this.customerService.updateCustomer(this.customer);
 
-    sessionStorage.setItem('customer', JSON.stringify(this.customer));
+    amplify.store('customer', JSON.stringify(this.customer));
     this.router.navigate(['/customerDetail']);
   }
 

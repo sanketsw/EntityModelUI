@@ -1,12 +1,12 @@
 {
-  "name": "cheetah",
+  "name": "EntityModelUI",
   "version": "1.0.0-rc.4",
   "author": "Sanket Sangwikar",
-  "description": "Speed of Cheetah for Customer Relations",
+  "description": "Speed of EntityModelUI for Customer Relations",
   "main": "src/tmp/app/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sanketsw/cheetah.git"
+    "url": "https://github.com/sanketsw/EntityModelUI.git"
   },
   "engines": {
     "node": ">=4.3"
@@ -36,7 +36,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sanketsw/cheetah/issues"
+    "url": "https://github.com/sanketsw/EntityModelUI/issues"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",

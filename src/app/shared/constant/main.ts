@@ -1,6 +1,6 @@
 export const MAIN = {
   APP: {
-    BRAND: 'Cheetah'
+    BRAND: 'EntityModelUI'
   }
 };
 

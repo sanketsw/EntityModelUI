@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     config = require('./config/gulp/config')(),
     envConfig = require('./config/gulp/env');
 
-console.log('======== cheetah ========');
+console.log('======== EntityModelUI ========');
 console.log('Current environment: ' + envConfig.ENV);
 console.log('- Change environment via --env or NODE_ENV');
 console.log('===========================================');

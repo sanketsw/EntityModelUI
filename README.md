@@ -1,5 +1,6 @@
-# cheetah
-Pricing App POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library   
+# EntityModelUI
+Generic UI to manage entities in a data model   
+POC using AngularJS 2.0 and [Primeng](http://www.primefaces.org/primeng/#/)- Rich angular2 UI component library   
 
 
 ## Reference code
@@ -47,7 +48,7 @@ npm install // if you have not run it before
 gulp build
 npm start
 ```
-On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app. 
+On gulp build, artifact produced is the dist folder. It contains configuration files and `build` folder. Build folder are compiled, compressed html, js and css contents that are used to deploy a production level app.
 
 **This will give you much better performance because of uglified javascripts, combined css, gzip compression and caching**
 
@@ -58,14 +59,10 @@ To push to bluemix execute:
 npm install // if you have not run it before
 gulp build
 cd dist
-cf push cheetahipoc 
+cf push entitymodelui
 ```
 
 Bluemix will use nodejs_buildpack and execute `npm install` followed `npm start`
 `npm start` executes server.js and launches the html and css contetns from `build` folder
 
-Hosted: http://cheetahipoc.mybluemix.net/
-
-
-
-
+Hosted: http://entitymodelui.mybluemix.net/

@@ -1,0 +1,29 @@
+<div class="row">
+	<span class="col-xs-12 Center FontBold">Know your Babys</span>
+	<span class="col-xs-12 Center Fs14">Click on a baby for details and action</span>
+	<div class="SeparatorFull" style="border-color: darkgray;"></div>
+</div>
+
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic Fs22" style="font-weight:bold; padding-bottom: 0px;">Baby
+		<span class="Fright">Status</span></h2>
+	<div *ngFor="let baby of babys" (click)="viewBaby(baby)">
+		<div class="Separator"> </div>
+		<div class="EmptyBox5"></div>
+		<div class="Container100">
+			<span class="LeadenGreen Fs24"> {{baby.name}} </span>
+			<span class="Fright">{{baby.dob}}</span>
+		</div>
+		<div class="Container60">
+			<span [class.Orange]="baby.expiry < 90" class="FontRobotoLight Fs18">Expires in <span class="FontBold">{{baby.expiry}}</span> days</span>
+			<br/> <span class="FontRobotoLight Fs18">{{baby.revenue | currency:'USD':true:'1.0-0'}} revenue</span>
+		</div>
+		<div class="Container40">
+			<div class="EmptyBox5"></div>
+			<span *ngIf="needsAction(baby)" class="Fright badge OrangeBack Fs18 FontRobotoLight" style="font-weight:normal;">Needs your action</span>
+			<div class="EmptyBox5"></div>
+		</div>
+		<div class="EmptyBox5"></div>
+	</div>
+</div>
+<div class="EmptyBox10"></div>

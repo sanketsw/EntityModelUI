@@ -3,7 +3,7 @@ import {Button, InputText, Password, Messages, Message} from 'primeng/primeng';
 import {Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user';
-import { CustomerService } from '../services/customer.service';
+import { BabyService } from '../services/baby.service';
 declare var amplify: any;
 
 
@@ -15,7 +15,7 @@ declare var amplify: any;
     'app/login/login.css'
   ],
   directives: [Button, InputText, Password, Messages],
-  providers: [UserService, CustomerService]
+  providers: [UserService, BabyService]
 })
 
 export class LoginComponent implements OnInit {
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   msgs: Message[] = [];
 
-  constructor(private router: Router, private userService: UserService, private customerService: CustomerService) {
+  constructor(private router: Router, private userService: UserService, private babyService: BabyService) {
   }
 
   ngOnInit() {
@@ -35,14 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToLandingPage(user: User) {
-    if (user.role === 'Customer') {
-      this.customerService.getCustomer(user.customer).then(customer => {
-        amplify.store('customer', JSON.stringify(customer));
-        this.router.navigate(['/customerDetail']);
-      });
-    } else {
-      this.router.navigate(['/customers']);
-    }
+    this.router.navigate(['/babys']);
   }
 
   showError(summary: string, detail: string) {

@@ -1,10 +1,12 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 
 import {LoginRoutes} from './login/index';
+import {BabyRoutes} from './baby/index';
 import {BabysRoutes} from './babys/index';
 
 const routes: RouterConfig = [
   ...LoginRoutes,
+  ...BabyRoutes,
   ...BabysRoutes,
 ];
 

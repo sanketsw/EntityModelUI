@@ -1,0 +1,30 @@
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+.ui-paginator .ui-paginator-pages .ui-paginator-page,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last,
+.ui-paginator .ui-paginator-rpp-options {
+  padding: 0px 3px !important;
+}
+.marginTop10 {
+  margin-top: 10px;
+}
+.Bold {
+  font-weight: bold;
+}
+.Center {
+  text-align: center;
+  display: block;
+}
+.red {
+  color: red;
+}
+.revenue {
+  color: gray;
+  float: right;
+  font-size: 200%;
+  margin-top: 2%;
+}
+.customerName {
+  font-size: 150%;
+}

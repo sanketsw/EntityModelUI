@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToLandingPage(user: User) {
-    this.router.navigate(['/babys']);
+    this.router.navigate(['/baby']);
   }
 
   showError(summary: string, detail: string) {

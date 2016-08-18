@@ -1,0 +1,29 @@
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+.ui-paginator .ui-paginator-pages .ui-paginator-page,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last,
+.ui-paginator .ui-paginator-rpp-options {
+  color: #546e7a;
+  font-size: 1em;
+  padding: 0px 3px !important;
+}
+
+.ui-paginator {
+   background-color: #dae8ef;
+   border: solid 1px #c1d5df;
+}
+
+.ui-paginator .ui-state-active, .ui-paginator .ui-paginator-pages .ui-state-active {
+     color: #546e7a !important;
+     border-bottom: solid 3px #546e7a;;
+}
+
+.ui-datatable .ui-column-filter {
+  margin-top: 0px;
+  font-size: 1em;
+}
+
+.ui-datatable table thead tr th, .ui-datatable table tfoot tr td, .ui-datatable table thead tr th {
+    font-size: 1em;
+}

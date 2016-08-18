@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Baby } from '../model/baby';
+import { Baby, BabyParentMap } from '../model/baby';
 // import { GrowthUpdateService } from '../services/growthUpdate.service';
 declare var amplify: any;
 
@@ -41,23 +41,68 @@ export class BabyService {
 
   updateBaby(baby: Baby) {
     console.log('updateBaby');
-    this.getBabys().then(babys => {
+    return this.getBabys().then(babys => {
       console.log('babys');
       console.log(babys);
       let current: Baby[] = babys;
       let newList: Baby[] = [];
       for (let c of current) {
-        if (c.crn === baby.crn) {
-          newList.push(baby);
-        } else {
+        if (c.crn !== baby.crn) {
           newList.push(c);
         }
       }
+      newList.push(baby);
       console.log('newList');
       console.log(newList);
       amplify.store('babys', JSON.stringify(newList));
+      return Promise.resolve(newList);
     });
   }
+
+  removeBaby(baby: Baby) {
+    console.log('removeBaby');
+    return this.getBabys().then(babys => {
+      let index = -1;
+      for(let b of babys) {
+        if(b.crn === baby.crn) {
+          index = babys.indexOf(b, 0);
+          break;
+        }
+      }
+      if (index > -1) {
+        babys.splice(index, 1);
+      }
+      amplify.store('babys', JSON.stringify(babys));
+      return Promise.resolve(babys);
+    });
+  }
+
+  getBabyParentMaps() {
+    console.log('babyParentMaps' + amplify.store('babys'));
+    let babyParentMaps: BabyParentMap[] = JSON.parse(amplify.store('babyParentMaps') === undefined ?
+      null : amplify.store('babyParentMaps'));
+    console.log('babyParentMaps');
+    console.log(babyParentMaps);
+    if (babyParentMaps === null || babyParentMaps.length < 1) {
+      console.log('Get from mock babys array');
+      babyParentMaps = [];
+      amplify.store('babyParentMaps', JSON.stringify(babyParentMaps));
+    }
+    return Promise.resolve(babyParentMaps);
+  }
+
+  getParents(baby: Baby) {
+    return this.getBabyParentMaps().then(babyParentMaps => {
+      let ret: BabyParentMap[] = [];
+      for (let b of babyParentMaps) {
+        if (b.baby_crn === baby.crn) {
+          ret.push(b);
+        }
+      }
+      return Promise.resolve(ret);
+    });
+  }
+
 
   clear() {
     this.getBabys().then(babys => {

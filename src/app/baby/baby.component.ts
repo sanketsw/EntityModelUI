@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Button, InputText, TabView, TabPanel, Panel, DataList, Calendar, DataTable, Column} from 'primeng/primeng';
+import {Button, InputText, Checkbox, TabView, TabPanel, Panel, DataGrid,
+  Calendar, DataTable, Column, Menubar, MenuItem} from 'primeng/primeng';
 import {Router} from '@angular/router';
 import { BabyService } from '../services/baby.service';
-import { Baby, BabyParentMap } from '../model/Baby';
+import { Baby, BabyParentLink } from '../model/Baby';
 import { GrowthUpdate } from '../model/GrowthUpdate';
 import { User } from '../model/user';
 declare var amplify: any;
@@ -15,11 +16,15 @@ declare var amplify: any;
   styleUrls: [
     'app/baby/baby.css'
   ],
-  directives: [Button, InputText, TabView, TabPanel, Panel, DataList, Calendar, DataTable, Column],
+  directives: [Button, InputText, Checkbox, TabView, TabPanel, Panel, DataGrid, Calendar, DataTable, Column, Menubar],
   providers: [BabyService]
 })
 
 export class BabyComponent implements OnInit {
+
+  items: MenuItem[];
+  globalItems: MenuItem[];
+  entityItems: MenuItem[];
 
   babys: Baby[];
 
@@ -27,66 +32,109 @@ export class BabyComponent implements OnInit {
 
   user: User;
 
+  selectedGrowthUpdate: GrowthUpdate;
+
+  selectedBabyParentLink: BabyParentLink;
+
+  babyParentLinks: BabyParentLink[];
+
   constructor(private router: Router, private babyService: BabyService) {
     // amplify.store('loggedIn', 'false');
   }
 
 
   ngOnInit() {
+    this.globalItems = [
+      { label: 'Search', icon: 'fa-search', command: (event) => { this.searchBaby(); } },
+      { label: 'New', icon: 'fa-plus', command: (event) => { this.newBaby(); } }
+    ];
+    this.entityItems = [
+      { label: 'Save', icon: 'fa-save', command: (event) => { this.saveBaby(); } },
+      { label: 'Discard changes', icon: 'fa-undo', command: (event) => { this.clearBaby(); } },
+      { label: 'Delete', icon: 'fa-trash', command: (event) => { this.removeBaby(this.selectedBaby); } }
+    ];
+    this.refreshMenuBar();
     this.user = JSON.parse(amplify.store('loggedUser'));
     this.babyService.getBabys().then(babys => {
       this.babys = babys;
     });
+    if (amplify.store('baby') !== undefined) {
+      this.babyService.getBaby(amplify.store('baby')).then(baby => {
+        this.editBaby(baby);
+        amplify.store('baby', null);
+      });
+    }
+  }
+
+  refreshMenuBar() {
+    this.items = [];
+    this.items = this.globalItems;
+    console.log('items');
+    console.log(this.items);
+    if (this.selectedBaby) {
+      this.items = this.items.concat(this.entityItems);
+    }
   }
 
   newBaby() {
     this.selectedBaby = { 'crn': 'enter crn' };
     this.selectedBaby.growthUpdates = [];
-    this.selectedBaby.babyParentMaps = [];
+    this.refreshMenuBar();
     // TODO show form
   }
 
   searchBaby() {
     this.selectedBaby = null;
-    // TODO show form
+    this.refreshMenuBar();
   }
-
-  onBabySelect(event) {
-    this.babyService.getParents(event.data).then(babyParentMaps => this.selectedBaby.babyParentMaps = babyParentMaps);
-  }
-
 
   saveBaby() {
     this.babyService.updateBaby(this.selectedBaby).then(babys => {
       this.babys = babys;
+      this.babyService.updateBabyParentLinks(this.babyParentLinks);
     });
     // TODO Growl saved
   }
 
   clearBaby() {
-
     this.selectedBaby = null;
-    amplify.store('baby', null);
     this.babyService.getBabys().then(babys => {
       this.babys = babys;
     });
+    this.refreshMenuBar();
+  }
+
+  editBaby(entry: Baby) {
+    this.selectedBaby = entry;
+    this.babyService.getParents(this.selectedBaby).then(babyParentLinks => this.babyParentLinks = babyParentLinks);
+    this.selectedGrowthUpdate = null;
+    this.selectedBabyParentLink = null;
+    this.refreshMenuBar();
   }
 
   removeBaby(entry: Baby) {
     this.babyService.removeBaby(entry).then(babys => {
       this.babys = babys;
     });
+    this.selectedBaby = null;
+    this.refreshMenuBar();
   }
 
+  // Composite Relationship
+
   newGrowthUpdate() {
-    this.selectedBaby.selectedGrowthUpdate = { 'baby_crn': this.selectedBaby.crn };
-    this.selectedBaby.growthUpdates.push(this.selectedBaby.selectedGrowthUpdate);
+    this.selectedGrowthUpdate = { 'baby_crn': this.selectedBaby.crn };
+    this.selectedBaby.growthUpdates.push(this.selectedGrowthUpdate);
     // TODO show form
   }
 
   searchGrowthUpdate() {
-    this.selectedBaby.selectedGrowthUpdate = null;
+    this.selectedGrowthUpdate = null;
     // TODO show form
+  }
+
+  editGrowthUpdate(entry: GrowthUpdate) {
+    this.selectedGrowthUpdate = entry;
   }
 
   removeGrowthUpdate(entry: GrowthUpdate) {
@@ -98,22 +146,33 @@ export class BabyComponent implements OnInit {
 
   }
 
+  // Many to Many relationship owner
 
-  newBabyParentMap() {
-    this.selectedBaby.selectedBabyParentMap = { 'baby_crn': this.selectedBaby.crn };
-    this.selectedBaby.babyParentMaps.push(this.selectedBaby.selectedBabyParentMap);
+
+  viewParent(entry: BabyParentLink) {
+    amplify.store('parent', entry.parent_crn);
+    this.router.navigate(['/parent']);
+  }
+
+  newBabyParentLink() {
+    this.selectedBabyParentLink = { 'baby_crn': this.selectedBaby.crn };
+    this.babyParentLinks.push(this.selectedBabyParentLink);
     // TODO show form
   }
 
-  searchBabyParentMap() {
-    this.selectedBaby.selectedBabyParentMap = null;
+  searchBabyParentLink() {
+    this.selectedBabyParentLink = null;
     // TODO show form
   }
 
-  removeBabyParentMap(entry: BabyParentMap) {
-    let index = this.selectedBaby.babyParentMaps.indexOf(entry, 0);
+  editBabyParentLink(entry: BabyParentLink) {
+    this.selectedBabyParentLink = entry;
+  }
+
+  removeBabyParentLink(entry: BabyParentLink) {
+    let index = this.babyParentLinks.indexOf(entry, 0);
     if (index > -1) {
-      this.selectedBaby.babyParentMaps.splice(index, 1);
+      this.babyParentLinks.splice(index, 1);
     }
 
   }

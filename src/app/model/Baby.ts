@@ -7,13 +7,9 @@ export interface Baby {
   birthLocation?: string;
 
   growthUpdates?: GrowthUpdate[];
-  selectedGrowthUpdate?: GrowthUpdate;
-
-  babyParentMaps?: BabyParentMap[];
-  selectedBabyParentMap?: BabyParentMap;
 }
 
-export interface BabyParentMap {
+export interface BabyParentLink {
   baby_crn: string;
   parent_crn?: string;
   role?: string;

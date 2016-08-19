@@ -1,27 +1,25 @@
+<p-menubar [model]="items"></p-menubar>
 <div class="Card ShadowEffect">
 	<h2 class="CardTopic Fs22" style="font-weight:bold; padding-bottom: 0px;">
 		<i class="fa fa-cube" ></i>
 		Baby <span *ngIf="selectedBaby">- {{selectedBaby.crn}} - {{selectedBaby.name}}</span>
-		<span class="Fright">
-		  <button type="button" *ngIf="selectedBaby" (click)="searchBaby()" pButton icon="fa fa-search" label="Select Another" class="GrayButton RaisedButton"></button>
-			<button type="button" (click)="newBaby()" pButton icon="fa fa-plus" label="New Baby" class="GrayButton RaisedButton"></button>
-				<button type="button" *ngIf="selectedBaby" (click)="saveBaby()" pButton icon="fa fa-save" label="Save Baby" class="RaisedButton"></button>
-				<button type="button" *ngIf="selectedBaby" (click)="clearBaby()" pButton icon="fa fa-remove" label="Clear Changes" class="RaisedButton"></button>
-		</span>
 		<div class="EmptyBox10"></div>
 	</h2>
-	<p-dataTable *ngIf="!selectedBaby" [value]="babys" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" selectionMode="single" [(selection)]="selectedBaby" [responsive]="true">
-		<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-		<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-		<p-column field="dob" header="Dob" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-		<p-column field="birthLocation" header="BirthLocation" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-		<p-column styleClass="col-icon">
-			<template let-entry="rowData">
-				<a (click)="removeBaby(entry)"><i class="fa fa-trash Red"></i></a>
-			</template>
-		</p-column>
-	</p-dataTable>
-	<div class="EmptyBox10"></div>
+	<div>
+		<p-dataTable *ngIf="!selectedBaby" [value]="babys" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
+			<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+			<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+			<p-column field="dob" header="Dob" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+			<p-column field="birthLocation" header="BirthLocation" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+			<p-column styleClass="col-icon">
+				<template let-entry="rowData">
+					<button type="button" (click)="editBaby(entry)" pButton icon="fa fa-pencil" class="RaisedButton"></button>
+					<button type="button" (click)="removeBaby(entry)" pButton icon="fa fa-trash Red" class="GrayButton RaisedButton"></button>
+				</template>
+			</p-column>
+		</p-dataTable>
+		<div class="EmptyBox20"></div>
+	</div>
 
 	<div *ngIf="selectedBaby">
 		<p-tabView>
@@ -38,7 +36,7 @@
 				<div class="Container50 Responsive100">
 					<div class="Container25">Dob: </div>
 					<div class="Container75">
-						<p-calendar [(ngModel)]="selectedBaby.dob" showAnim="slideDown" [showIcon]="true"></p-calendar>
+						<p-calendar [(ngModel)]="selectedBaby.dob" showAnim="slideDown" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
 					</div>
 					<div class="EmptyBox5"></div>
 					<div class="Container25">BirthLocation: </div>
@@ -50,95 +48,122 @@
 
 
 			<p-tabPanel header="GrowthUpdate">
+				<div class="Container50 Responsive100">
+					<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">
+						<div class="EmptyBox10"></div>
+						<i class="fa fa-cube" ></i> GrowthUpdates
+						<span class="Fright">
+							<button type="button" (click)="newGrowthUpdate()" pButton icon="fa fa-plus" label="New GrowthUpdate" class="GrayButton RaisedButton"></button>
+						</span>
+					</h2>
+				</div>
 				<div class="EmptyBox10"></div>
-				<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">				<i class="fa fa-cube" ></i>				GrowthUpdate
-				<span *ngIf="selectedBaby.selectedGrowthUpdate"> - {{selectedBaby.selectedGrowthUpdate.timestamp}} </span>
-				<span class="Fright">
-				  <button type="button" *ngIf="selectedBaby.selectedGrowthUpdate" (click)="searchGrowthUpdate()" pButton icon="fa fa-search" label="Select Another" class="GrayButton RaisedButton"></button>
-					<button type="button" (click)="newGrowthUpdate()" pButton icon="fa fa-plus" label="New GrowthUpdate" class="GrayButton RaisedButton"></button>
-				</span>
-				<div class="EmptyBox10"></div>
-			</h2>
-				<p-dataTable *ngIf="!selectedBaby.selectedGrowthUpdate" [value]="selectedBaby.growthUpdates" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" selectionMode="single" [(selection)]="selectedBaby.selectedGrowthUpdate" [responsive]="true"
-								(onRowSelect)="onBabySelect($event)">
-					<p-column field="timestamp" header="TimeStamp" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column field="height" header="Height" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column field="weight" header="Weight" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column field="headSize" header="HeadSize" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column styleClass="col-button">
-						<template let-entry="rowData">
-							<a (click)="removeGrowthUpdate(entry)"><i class="fa fa-trash Red"></i></a>
-						</template>
-					</p-column>
-				</p-dataTable>
-				<div class="EmptyBox10"></div>
-
-				<div *ngIf="selectedBaby.selectedGrowthUpdate">
-					<div class="EmptyBox20"></div>
-					<div class="Container50 Responsive100">
-						<div class="Container25">Timestamp*: </div>
-						<div class="Container75">
-							<p-calendar [(ngModel)]="selectedBaby.selectedGrowthUpdate.timestamp" showAnim="slideDown" [showIcon]="true"></p-calendar>
-						</div>
-						<div class="EmptyBox5"></div>
-						<div class="Container25">Height: </div>
-						<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBaby.selectedGrowthUpdate.height" />
-						<div class="EmptyBox5"></div>
-					</div>
-					<div class="Container50 Responsive100">
-						<div class="Container25">Weight: </div>
-						<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBaby.selectedGrowthUpdate.weight" />
-						<div class="EmptyBox5"></div>
-						<div class="Container25">HeadSize: </div>
-						<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBaby.selectedGrowthUpdate.headSize" />
-						<div class="EmptyBox5"></div>
-					</div>
+				<div class="Container50 Responsive100">
+					<p-dataTable [value]="selectedBaby.growthUpdates" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
+						<p-column field="timestamp" header="TimeStamp" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="height" header="Height" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="weight" header="Weight" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="headSize" header="HeadSize" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column styleClass="col-button">
+							<template let-entry="rowData">
+								<button type="button" (click)="editGrowthUpdate(entry)" pButton icon="fa fa-pencil" class="RaisedButton"></button>
+								<button type="button" (click)="removeGrowthUpdate(entry)" pButton icon="fa fa-trash Red" class="GrayButton RaisedButton"></button>
+							</template>
+						</p-column>
+					</p-dataTable>
 					<div class="EmptyBox10"></div>
 				</div>
+
+				<div class="Container50 Responsive100" *ngIf="selectedGrowthUpdate">
+					<div class="ContainerIndent">
+						<h2 class="CardTopic Fs18" style="font-weight:bold; padding-bottom: 0px;">
+							<div class="EmptyBox10"></div>
+							<i class="fa fa-cube" ></i> GrowthUpdate - {{selectedGrowthUpdate.timestamp}}
+							<div class="EmptyBox10"></div>
+						</h2>
+						<div class="Separator"></div>
+						<div class="EmptyBox20"></div>
+						<div class="Container50 Responsive100">
+							<div class="Container25">Timestamp*: </div>
+							<div class="Container75">
+								<p-calendar [(ngModel)]="selectedGrowthUpdate.timestamp" showAnim="slideDown" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
+							</div>
+							<div class="EmptyBox5"></div>
+							<div class="Container25">Height: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedGrowthUpdate.height" />
+							<div class="EmptyBox5"></div>
+						</div>
+						<div class="Container50 Responsive100">
+							<div class="Container25">Weight: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedGrowthUpdate.weight" />
+							<div class="EmptyBox5"></div>
+							<div class="Container25">HeadSize: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedGrowthUpdate.headSize" />
+							<div class="EmptyBox5"></div>
+						</div>
+						<div class="EmptyBox10"></div>
+					</div>
+				</div>
+
+				<div class="EmptyBox10"></div>
 			</p-tabPanel>
 
 			<p-tabPanel header="Parent">
-				<div class="EmptyBox10"></div>
-				<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">
-				<i class="fa fa-cube" ></i>
-				Parents
-				<span class="Fright">
-					<button type="button" (click)="newBabyParentMap()" pButton icon="fa fa-plus" label="New BabyParentMap"></button>
-				</span>
-				<div class="EmptyBox10"></div>
-			</h2>
-				<p-dataTable [value]="selectedBaby.babyParentMaps" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" selectionMode="single" [(selection)]="selectedBaby.selectedBabyParentMap" [responsive]="true">
-					<p-column field="parent_crn" header="Parent Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column field="role" header="Role" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
-					<p-column styleClass="col-button">
-						<template let-entry="rowData">
-							<a (click)="removeBabyParentMap(entry)"><i class="fa fa-trash Red"></i></a>
-						</template>
-					</p-column>
-				</p-dataTable>
-				<div class="EmptyBox10"></div>
 
-
-
-				<div *ngIf="selectedBaby.selectedBabyParentMap">
-					<div class="EmptyBox20"></div>
-					<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">
-					<i class="fa fa-cube" ></i>
-					Parent - {{selectedBaby.selectedBabyParentMap.parent_crn}} - {{selectedBaby.selectedBabyParentMap.role}}
-				</h2>
-					<div class="EmptyBox20"></div>
-					<div class="Container50 Responsive100">
-						<div class="Container25">Role: </div>
-						<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBaby.selectedBabyParentMap.role" />
-						<div class="EmptyBox5"></div>
-					</div>
-					<div class="Container50 Responsive100">
-						<div class="Container25">Parent: </div>
-						<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBaby.selectedBabyParentMap.parent_crn" />
-						<div class="EmptyBox5"></div>
-					</div>
+				<div class="Container50 Responsive100">
+					<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;"><i class="fa fa-cube" ></i>	Parents
+						<span class="Fright">
+							<button type="button" (click)="newBabyParentLink()" pButton icon="fa fa-plus" label="New BabyParentLink" class="GrayButton RaisedButton"></button>
+						</span>
+					</h2>
+				</div>
+				<div class="EmptyBox10"></div>
+				<div class="Container50 Responsive100">
+					<p-dataTable [value]="babyParentLinks" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
+						<p-column styleClass="col-button" field="parent_crn" header="Parent_Crn" [filter]="true" filterMatchMode="contains" [sortable]="true">
+							<template let-entry="rowData">
+								<a (click)="viewParent(entry)">{{entry.parent_crn}} <i class="fa fa-external-link"></i></a>
+							</template>
+						</p-column>
+						<p-column field="role" header="Role" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column styleClass="col-button">
+							<template let-entry="rowData">
+								<button type="button" (click)="editBabyParentLink(entry)" pButton icon="fa fa-pencil" class="RaisedButton"></button>
+								<button type="button" (click)="removeBabyParentLink(entry)" pButton icon="fa fa-trash Red" class="GrayButton RaisedButton"></button>
+							</template>
+						</p-column>
+					</p-dataTable>
 					<div class="EmptyBox10"></div>
 				</div>
+
+
+
+				<div class="Container50 Responsive100" *ngIf="selectedBabyParentLink">
+					<div class="ContainerIndent">
+						<h2 class="CardTopic Fs18" style="font-weight:bold; padding-bottom: 0px;">
+							<div class="EmptyBox10"></div>
+							<i class="fa fa-cube" ></i> Parent - {{selectedBabyParentLink.parent_crn}} - {{selectedBabyParentLink.role}}
+							<div class="EmptyBox10"></div>
+						</h2>
+						<div class="Separator"></div>
+						<div class="EmptyBox20"></div>
+						<div>
+							<div class="EmptyBox20"></div>
+							<div class="Container50 Responsive100">
+								<div class="Container25">Role: </div>
+								<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.role" />
+								<div class="EmptyBox5"></div>
+							</div>
+							<div class="Container50 Responsive100">
+								<div class="Container25">Parent: </div>
+								<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.parent_crn" />
+								<div class="EmptyBox5"></div>
+							</div>
+							<div class="EmptyBox10"></div>
+						</div>
+					</div>
+				</div>
+				<div class="EmptyBox10"></div>
 			</p-tabPanel>
 
 

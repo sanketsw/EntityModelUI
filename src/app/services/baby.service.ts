@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Baby, BabyParentMap } from '../model/baby';
+import { Baby, BabyParentLink } from '../model/baby';
 // import { GrowthUpdateService } from '../services/growthUpdate.service';
 declare var amplify: any;
 
@@ -55,6 +55,7 @@ export class BabyService {
       console.log('newList');
       console.log(newList);
       amplify.store('babys', JSON.stringify(newList));
+
       return Promise.resolve(newList);
     });
   }
@@ -63,8 +64,8 @@ export class BabyService {
     console.log('removeBaby');
     return this.getBabys().then(babys => {
       let index = -1;
-      for(let b of babys) {
-        if(b.crn === baby.crn) {
+      for (let b of babys) {
+        if (b.crn === baby.crn) {
           index = babys.indexOf(b, 0);
           break;
         }
@@ -77,24 +78,42 @@ export class BabyService {
     });
   }
 
-  getBabyParentMaps() {
-    console.log('babyParentMaps' + amplify.store('babys'));
-    let babyParentMaps: BabyParentMap[] = JSON.parse(amplify.store('babyParentMaps') === undefined ?
-      null : amplify.store('babyParentMaps'));
-    console.log('babyParentMaps');
-    console.log(babyParentMaps);
-    if (babyParentMaps === null || babyParentMaps.length < 1) {
+  getBabyParentLinks() {
+    console.log('babyParentLinks' + amplify.store('babys'));
+    let babyParentLinks: BabyParentLink[] = JSON.parse(amplify.store('babyParentLinks') === undefined ?
+      null : amplify.store('babyParentLinks'));
+    console.log('babyParentLinks');
+    console.log(babyParentLinks);
+    if (babyParentLinks === null || babyParentLinks.length < 1) {
       console.log('Get from mock babys array');
-      babyParentMaps = [];
-      amplify.store('babyParentMaps', JSON.stringify(babyParentMaps));
+      babyParentLinks = [];
+      amplify.store('babyParentLinks', JSON.stringify(babyParentLinks));
     }
-    return Promise.resolve(babyParentMaps);
+    return Promise.resolve(babyParentLinks);
+  }
+
+  updateBabyParentLinks(latest: BabyParentLink[]) {
+    this.getBabyParentLinks().then(babyParentLinks => {
+      for (let l of latest) {
+        let found = false;
+        for (let b of babyParentLinks) {
+          if (b.baby_crn === l.baby_crn && b.parent_crn === l.parent_crn) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          babyParentLinks.push(l);
+        }
+      }
+      amplify.store('babyParentLinks', JSON.stringify(babyParentLinks));
+    });
   }
 
   getParents(baby: Baby) {
-    return this.getBabyParentMaps().then(babyParentMaps => {
-      let ret: BabyParentMap[] = [];
-      for (let b of babyParentMaps) {
+    return this.getBabyParentLinks().then(babyParentLinks => {
+      let ret: BabyParentLink[] = [];
+      for (let b of babyParentLinks) {
         if (b.baby_crn === baby.crn) {
           ret.push(b);
         }
@@ -105,12 +124,7 @@ export class BabyService {
 
 
   clear() {
-    this.getBabys().then(babys => {
-      // for (let c of babys) {
-      //   this.growthUpdateService.clear(c.crn);
-      // }
-      amplify.store('babys', null);
-    });
-
+    amplify.store('babys', null);
+    amplify.store('babyParentLinks', null);
   }
 }

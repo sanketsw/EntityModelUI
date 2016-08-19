@@ -1,0 +1,138 @@
+<p-menubar [model]="items"></p-menubar>
+<div class="Card ShadowEffect">
+	<h2 class="CardTopic Fs22" style="font-weight:bold; padding-bottom: 0px;">
+		<i class="fa fa-cube" ></i>
+		Parent <span *ngIf="selectedParent">- {{selectedParent.crn}} - {{selectedParent.name}}</span>
+		<div class="EmptyBox10"></div>
+	</h2>
+	<p-dataTable *ngIf="!selectedParent" [value]="parents" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
+		<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+		<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+		<p-column field="dob" header="Dob" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+		<p-column field="email" header="Email" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+		<p-column field="phone" header="Phone" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+		<p-column styleClass="col-icon">
+			<template let-entry="rowData">
+				<button type="button" (click)="editParent(entry)" pButton icon="fa fa-pencil" class="RaisedButton"></button>
+				<button type="button" (click)="removeParent(entry)" pButton icon="fa fa-trash Red" class="GrayButton RaisedButton"></button>
+			</template>
+		</p-column>
+	</p-dataTable>
+	<div class="EmptyBox10"></div>
+
+	<div *ngIf="selectedParent">
+		<p-tabView>
+			<p-tabPanel header="Details">
+				<div class="EmptyBox10"></div>
+				<div class="Container50 Responsive100">
+					<div class="Container25">Crn*: </div>
+					<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedParent.crn" />
+					<div class="EmptyBox5"></div>
+					<div class="Container25">Name: </div>
+					<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedParent.name" />
+					<div class="EmptyBox5"></div>
+				</div>
+				<div class="Container50 Responsive100">
+					<div class="Container25">Dob: </div>
+					<div class="Container75">
+						<p-calendar [(ngModel)]="selectedParent.dob" showAnim="slideDown" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
+					</div>
+					<div class="EmptyBox5"></div>
+					<div class="Container25">Email: </div>
+					<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedParent.email" />
+					<div class="EmptyBox5"></div>
+					<div class="Container25">Phone: </div>
+					<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedParent.phone" />
+					<div class="EmptyBox5"></div>
+				</div>
+				<div class="EmptyBox10"></div>
+			</p-tabPanel>
+
+
+			<p-tabPanel header="Address">
+				<div class="Container50 Responsive100">
+					<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">
+						<div class="EmptyBox10"></div>
+						<i class="fa fa-cube" ></i> Address
+						<span class="Fright">
+							<button type="button" (click)="newAddress()" pButton icon="fa fa-plus" label="New Address" class="GrayButton RaisedButton"></button>
+						</span>
+					</h2>
+				</div>
+				<div class="EmptyBox10"></div>
+				<div class="Container50 Responsive100">
+					<p-dataTable [value]="selectedParent.addresss" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
+						<p-column field="addr1" header="Addr1" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="addr2" header="Addr2" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="city" header="City" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="state" header="State" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column field="postcode" header="Postcode" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+						<p-column styleClass="col-button">
+							<template let-entry="rowData">
+								<button type="button" (click)="editAddress(entry)" pButton icon="fa fa-pencil" class="RaisedButton"></button>
+								<button type="button" (click)="removeAddress(entry)" pButton icon="fa fa-trash Red" class="GrayButton RaisedButton"></button>
+							</template>
+						</p-column>
+					</p-dataTable>
+					<div class="EmptyBox10"></div>
+				</div>
+
+				<div class="Container50 Responsive100" *ngIf="selectedAddress">
+					<div class="ContainerIndent">
+						<h2 class="CardTopic Fs18" style="font-weight:bold; padding-bottom: 0px;">
+							<div class="EmptyBox10"></div>
+							<i class="fa fa-cube" ></i> Address - {{selectedAddress.addr1}}, {{selectedAddress.city}}
+							<div class="EmptyBox10"></div>
+						</h2>
+						<div class="Separator"></div>
+						<div class="EmptyBox20"></div>
+						<div class="Container50 Responsive100">
+							<div class="Container25">Addr1*: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedAddress.addr1" />
+							<div class="EmptyBox5"></div>
+							<div class="Container25">Addr2: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedAddress.addr2" />
+							<div class="EmptyBox5"></div>
+						</div>
+						<div class="Container50 Responsive100">
+							<div class="Container25">City: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedAddress.city" />
+							<div class="EmptyBox5"></div>
+							<div class="Container25">State: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedAddress.state" />
+							<div class="EmptyBox5"></div>
+							<div class="Container25">Postcode: </div>
+							<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedAddress.postcode" />
+							<div class="EmptyBox5"></div>
+						</div>
+						<div class="EmptyBox10"></div>
+					</div>
+				</div>
+
+				<div class="EmptyBox10"></div>
+			</p-tabPanel>
+
+			<p-tabPanel header="Baby">
+				<div class="EmptyBox10"></div>
+				<h2 class="CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;"><i class="fa fa-cube" ></i>	Baby
+					<div class="EmptyBox10"></div>
+				</h2>
+				<p-dataGrid *ngIf="!selectedBabyParentLink" [value]="babyParentLinks" [columns]="5" [rows]="3" [paginator]="true" [pageLinks]="3" [responsive]="true">
+					<template let-entry>
+						<div style="padding:3px">
+							<p-panel [paginator]="true" [style]="{'text-align':'center'}">
+								{{entry.baby_crn}}
+								<div class="EmptyBox10"></div>
+								<button type="button" (click)="viewBaby(entry)" pButton icon="fa fa-external-link" class="RaisedButton"></button>
+							</p-panel>
+						</div>
+
+					</template>
+				</p-dataGrid>
+				<div class="EmptyBox10"></div>
+			</p-tabPanel>
+
+		</p-tabView>
+	</div>
+</div>
+<div class="EmptyBox10"></div>

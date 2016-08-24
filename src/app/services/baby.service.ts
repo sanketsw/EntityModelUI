@@ -47,7 +47,7 @@ export class BabyService {
       let current: Baby[] = babys;
       let newList: Baby[] = [];
       for (let c of current) {
-        if (c.crn !== baby.crn) {
+      if (c.crn !== baby.crn) {
           newList.push(c);
         }
       }
@@ -93,20 +93,24 @@ export class BabyService {
   }
 
   updateBabyParentLinks(latest: BabyParentLink[]) {
-    this.getBabyParentLinks().then(babyParentLinks => {
+      return this.getBabyParentLinks().then(babyParentLinks => {
       for (let l of latest) {
         let found = false;
+        let index = -1;
         for (let b of babyParentLinks) {
-          if (b.baby_crn === l.baby_crn && b.parent_crn === l.parent_crn) {
+        if (b.baby_crn === l.baby_crn && b.parent_crn === l.parent_crn) {
             found = true;
+            index = babyParentLinks.indexOf(b);
             break;
           }
         }
-        if (!found) {
-          babyParentLinks.push(l);
+        if (found) {
+          babyParentLinks.splice(index, 1);
         }
+        babyParentLinks.push(l);
       }
       amplify.store('babyParentLinks', JSON.stringify(babyParentLinks));
+      return Promise.resolve(true);
     });
   }
 

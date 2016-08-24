@@ -1,0 +1,11 @@
+  <div class="Card Container100 Responsive100 BootstrapBorder">
+  	<p-dataTable [value]="parents" sortMode="multiple" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true" selectionMode="single" [(selection)]="selectedParent" (onRowSelect)="onRowSelect($event)">
+  		<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+  		<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+  		<p-column field="dob" header="Dob" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+  		<p-column field="email" header="Email" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+  		<p-column field="phone" header="Phone" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
+  	</p-dataTable>
+  </div>
+
+  <div class="EmptyBox10"></div>

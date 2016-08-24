@@ -6,6 +6,8 @@ import { BabyService } from '../services/baby.service';
 import { Baby, BabyParentLink } from '../model/Baby';
 import { GrowthUpdate } from '../model/GrowthUpdate';
 import { User } from '../model/user';
+import { ParentsComponent } from '../parents/parents.component';
+import { Parent } from '../model/Parent';
 declare var amplify: any;
 
 
@@ -16,7 +18,8 @@ declare var amplify: any;
   styleUrls: [
     'app/baby/baby.css'
   ],
-  directives: [Button, InputText, Checkbox, TabView, TabPanel, Panel, DataGrid, Calendar, DataTable, Column, Menubar],
+  directives: [Button, InputText, Checkbox, TabView, TabPanel, Panel, DataGrid, Calendar, DataTable, Column, Menubar,
+  ParentsComponent],
   providers: [BabyService]
 })
 
@@ -25,6 +28,7 @@ export class BabyComponent implements OnInit {
   items: MenuItem[];
   globalItems: MenuItem[];
   entityItems: MenuItem[];
+
 
   babys: Baby[];
 
@@ -64,6 +68,7 @@ export class BabyComponent implements OnInit {
         amplify.store('baby', null);
       });
     }
+
   }
 
   refreshMenuBar() {
@@ -79,6 +84,9 @@ export class BabyComponent implements OnInit {
   newBaby() {
     this.selectedBaby = { 'crn': 'enter crn' };
     this.selectedBaby.growthUpdates = [];
+    this.babyService.getParents(this.selectedBaby).then(babyParentLinks => this.babyParentLinks = babyParentLinks);
+    this.selectedGrowthUpdate = null;
+    this.selectedBabyParentLink = null;
     this.refreshMenuBar();
     // TODO show form
   }
@@ -91,7 +99,9 @@ export class BabyComponent implements OnInit {
   saveBaby() {
     this.babyService.updateBaby(this.selectedBaby).then(babys => {
       this.babys = babys;
-      this.babyService.updateBabyParentLinks(this.babyParentLinks);
+    });
+    this.babyService.updateBabyParentLinks(this.babyParentLinks).then(returned => {
+      this.babyService.getParents(this.selectedBaby).then(babyParentLinks => this.babyParentLinks = babyParentLinks);
     });
     // TODO Growl saved
   }
@@ -174,8 +184,11 @@ export class BabyComponent implements OnInit {
     if (index > -1) {
       this.babyParentLinks.splice(index, 1);
     }
-
   }
 
+  onNotify(parent: Parent): void {
+    this.selectedBabyParentLink.parent_crn =  parent.crn;
+    (<any>$('#myModal')).modal('hide');
+  }
 
 }

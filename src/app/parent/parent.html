@@ -5,6 +5,7 @@
 		Parent <span *ngIf="selectedParent">- {{selectedParent.crn}} - {{selectedParent.name}}</span>
 		<div class="EmptyBox10"></div>
 	</h2>
+	<div class="ContainerIndent">
 	<p-dataTable *ngIf="!selectedParent" [value]="parents" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
 		<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
 		<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
@@ -18,6 +19,7 @@
 			</template>
 		</p-column>
 	</p-dataTable>
+</div>
 	<div class="EmptyBox10"></div>
 
 	<div *ngIf="selectedParent">

@@ -5,7 +5,7 @@
 		Baby <span *ngIf="selectedBaby">- {{selectedBaby.crn}} - {{selectedBaby.name}}</span>
 		<div class="EmptyBox10"></div>
 	</h2>
-	<div>
+	<div class="ContainerIndent">
 		<p-dataTable *ngIf="!selectedBaby" [value]="babys" [rows]="10" [paginator]="true" [pageLinks]="3" [globalFilter]="gb" [responsive]="true">
 			<p-column field="crn" header="Crn" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
 			<p-column field="name" header="Name" [filter]="true" filterMatchMode="contains" [sortable]="true"></p-column>
@@ -151,12 +151,15 @@
 							<div class="EmptyBox20"></div>
 							<div class="Container50 Responsive100">
 								<div class="Container25">Role: </div>
-								<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.role" />
+								<input type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.role" />
 								<div class="EmptyBox5"></div>
 							</div>
 							<div class="Container50 Responsive100">
 								<div class="Container25">Parent: </div>
-								<input id="in1" type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.parent_crn" />
+								<div class="Container75">
+									<input type="text" size="30" pInputText [(ngModel)]="selectedBabyParentLink.parent_crn" />
+									<button type="button" pButton icon="fa fa-search" class="RaisedButton" data-toggle="modal" data-target="#myModal"></button>
+			  				</div>
 								<div class="EmptyBox5"></div>
 							</div>
 							<div class="EmptyBox10"></div>
@@ -172,3 +175,33 @@
 	</div>
 </div>
 <div class="EmptyBox10"></div>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title CardTopic Fs20" style="font-weight:bold; padding-bottom: 0px;">Select Parent</h4>
+      </div>
+      <div class="modal-body">
+					<as-parents (notify)='onNotify($event)'>
+						This is my transcluded content inside my modal!
+					</as-parents>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- <p-dialog header="Select Parent" [(visible)]="display" [responsive]=true [width]=1200>
+		<div>
+				<as-parents (notify)='onNotify($event)'>
+					This is my transcluded content inside my modal!
+				</as-parents>
+	</div>
+</p-dialog> -->
